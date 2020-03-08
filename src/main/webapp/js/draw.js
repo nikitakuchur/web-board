@@ -69,7 +69,7 @@ function init() {
         }
     }
 
-    canvas.mousedown(function (e) {
+    canvas.on('mousedown touchstart', function(e) {
         brush.down = true;
         currentStroke = {
             color: brush.color,
@@ -80,7 +80,7 @@ function init() {
         mouseEvent(e);
     });
 
-    canvas.mouseup(function (e) {
+    canvas.on('mouseup touchend', function(e) {
         $.ajax({
             type: 'POST',
             url: 'board',
@@ -93,7 +93,7 @@ function init() {
         currentStroke = null;
     });
 
-    canvas.mousemove(function (e) {
+    canvas.on('mousemove touchmove', function(e) {
         if (brush.down) {
             mouseEvent(e);
         }
