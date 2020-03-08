@@ -24,13 +24,10 @@ function draw() {
 }
 
 function clear() {
-    strokes = [];
-    $.ajax({
-        type: 'POST',
-        url: 'board',
-        data: {clear: true},
+    clearBoard().done(function() {
+        strokes = [];
+        draw();
     });
-    draw();
 }
 
 function init() {
@@ -46,16 +43,12 @@ function init() {
     $(window).resize(updateSize).resize();
 
     (function refresher() {
-        $.ajax('board', {
-            success: function (data) {
-                if (!brush.down) {
-                    strokes = JSON.parse(data);
-                    draw();
-                }
-            },
-            complete: function () {
-                setTimeout(refresher, 400);
-            }
+        getStrokes().done(function (data) {
+            if (!brush.down) {
+                strokes = JSON.parse(data);
+                draw();
+            }}).done(function () {
+            setTimeout(refresher, 400);
         });
     })();
 
@@ -89,14 +82,8 @@ function init() {
     });
 
     canvas.on('mouseup touchend', function(e) {
-        $.ajax({
-            type: 'POST',
-            url: 'board',
-            data: {stroke: JSON.stringify(currentStroke)},
-            dataType: 'json',
-            complete: function () {
-                brush.down = false;
-            }
+        addStroke(currentStroke).done(function () {
+            brush.down = false;
         });
         currentStroke = null;
     });
