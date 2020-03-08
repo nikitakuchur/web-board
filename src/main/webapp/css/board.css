@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+}
+
+#draw {
+    display: block;
+    position: absolute;
+}
+
+#clear-button {
+    position: absolute;
+}
