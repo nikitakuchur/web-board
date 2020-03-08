@@ -61,11 +61,19 @@ function init() {
 
     function mouseEvent(e) {
         if (currentStroke != null) {
-            currentStroke.points.push({
-                x: e.pageX,
-                y: e.pageY,
-            });
-            draw()
+            if (e.pageX === undefined) {
+                // It needs for mobile devices
+                currentStroke.points.push({
+                    x: e.originalEvent.touches[0].pageX,
+                    y: e.originalEvent.touches[0].pageY,
+                });
+            } else {
+                currentStroke.points.push({
+                    x: e.pageX,
+                    y: e.pageY,
+                });
+            }
+            draw();
         }
     }
 
