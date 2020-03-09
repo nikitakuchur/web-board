@@ -47,7 +47,7 @@ function init() {
             if (!brush.down) {
                 strokes = JSON.parse(data);
                 draw();
-            }}).done(function () {
+            }}).always(function () {
             setTimeout(refresher, 400);
         });
     })();
@@ -82,7 +82,7 @@ function init() {
     });
 
     canvas.on('mouseup touchend', function(e) {
-        addStroke(currentStroke).done(function () {
+        addStroke(currentStroke).always(function () {
             brush.down = false;
         });
         currentStroke = null;
