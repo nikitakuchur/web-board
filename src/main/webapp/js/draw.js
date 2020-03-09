@@ -81,7 +81,7 @@ function init() {
         mouseEvent(e);
     });
 
-    canvas.on('mouseup touchend', function(e) {
+    canvas.on('mouseup touchend', function() {
         addStroke(currentStroke).always(function () {
             brush.down = false;
         });
@@ -94,11 +94,11 @@ function init() {
         }
     });
 
-    $('#clear-button').click(function (e) {
+    $('#clear-button').click(function () {
         clear();
     });
 
-    $('#slider').change(function(e) {
+    $('#slider').change(function() {
         brush.size = $(this).val()
     });
 }
