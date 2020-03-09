@@ -2,7 +2,7 @@ function clearBoard() {
     return $.ajax({
         type: 'POST',
         url: 'board-servlet',
-        data: {clear: true},
+        data: 'clear',
     });
 }
 
