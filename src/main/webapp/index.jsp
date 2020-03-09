@@ -3,6 +3,7 @@
     <head>
         <title>web-board</title>
         <link rel="stylesheet" type="text/css" href="css/board.css">
+        <meta meta name="viewport" content="width=device-width, user-scalable=no" />
     </head>
     <body>
         <canvas id="draw"></canvas>
