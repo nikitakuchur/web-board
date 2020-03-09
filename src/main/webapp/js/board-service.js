@@ -1,7 +1,7 @@
 function clearBoard() {
     return $.ajax({
         type: 'POST',
-        url: 'board',
+        url: 'board-servlet',
         data: {clear: true},
     });
 }
@@ -9,12 +9,12 @@ function clearBoard() {
 function addStroke(stroke) {
     return $.ajax({
         type: 'POST',
-        url: 'board',
+        url: 'board-servlet',
         data: {stroke: JSON.stringify(stroke)},
         dataType: 'json',
     });
 }
 
 function getStrokes() {
-    return $.ajax('board');
+    return $.ajax('board-servlet');
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/board")
+@WebServlet("/board-servlet")
 public class BoardServlet extends HttpServlet {
 
     private final Gson gson = new Gson();

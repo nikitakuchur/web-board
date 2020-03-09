@@ -97,6 +97,10 @@ function init() {
     $('#clear-button').click(function (e) {
         clear();
     });
+
+    $('#slider').change(function(e) {
+        brush.size = $(this).val()
+    });
 }
 
 $(init);
