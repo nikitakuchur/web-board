@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BoardMessage {
     private List<Stroke> strokes;
-    private int deleted;
+    private int deleted = -1;
     private boolean clear;
 
     private static final BoardMessage CLEAR_MESSAGE = new BoardMessage(null, -1, true);
