@@ -18,27 +18,21 @@ function onMessage(f) {
 
 function sendStrokesMessage(strokes) {
     let message = JSON.stringify({
-        strokes: strokes,
-        deleted: -1,
-        clear: false,
+        strokes: strokes
     });
     ws.send(message);
 }
 
 function sendDeleteMessage(deleted) {
     let message = JSON.stringify({
-        strokes: null,
-        deleted: deleted,
-        clear: false,
+        deleted: deleted
     });
     ws.send(message);
 }
 
 function sendClearMessage() {
     let message = JSON.stringify({
-        strokes: null,
-        deleted: -1,
-        clear: true,
+        clear: true
     });
     ws.send(message);
 }
