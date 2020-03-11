@@ -5,10 +5,6 @@ function initWebSocket() {
     ws = new WebSocket(protocol + location.host  + location.pathname + "board-endpoint");
 }
 
-function closeWebSocket() {
-    ws.close();
-}
-
 function onMessage(f) {
     ws.onmessage = function(event) {
         let message = JSON.parse(event.data);
