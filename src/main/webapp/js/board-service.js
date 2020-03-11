@@ -1,7 +1,8 @@
 let ws;
 
 function initWebSocket() {
-    ws = new WebSocket("ws://" + location.host  + location.pathname + "board-endpoint");
+    let protocol = location.protocol === 'https:' ? "wss://" : "ws://";
+    ws = new WebSocket(protocol + location.host  + location.pathname + "board-endpoint");
 }
 
 function closeWebSocket() {
