@@ -7,29 +7,6 @@ let canvas, ctx,
     strokes = [],
     currentStroke = null;
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width(), canvas.height());
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    for (let stroke of strokes) {
-        ctx.strokeStyle = stroke.color;
-        ctx.lineWidth = stroke.size;
-        ctx.beginPath();
-        ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
-        for (let point of stroke.points) {
-            ctx.lineTo(point.x, point.y)
-        }
-        ctx.stroke();
-    }
-}
-
-function clear() {
-    clearBoard().done(function() {
-        strokes = [];
-        draw();
-    });
-}
-
 function init() {
     canvas = $('#draw');
     ctx = canvas[0].getContext('2d');
@@ -39,18 +16,20 @@ function init() {
             width: window.innerWidth,
             height: window.innerHeight
         });
+        draw();
     }
     $(window).resize(updateSize).resize();
 
-    (function refresher() {
-        getStrokes().done(function (data) {
-            if (!brush.down) {
-                strokes = JSON.parse(data);
-                draw();
-            }}).always(function () {
-            setTimeout(refresher, 400);
-        });
-    })();
+    initWebSocket();
+    onMessage(data => {
+        if (data.clear) {
+            strokes = [];
+        }
+        if (data.strokes != null) {
+            strokes = strokes.concat(data.strokes);
+        }
+        draw();
+    });
 
     function mouseEvent(e) {
         if (currentStroke != null) {
@@ -82,9 +61,8 @@ function init() {
     });
 
     canvas.on('mouseup touchend', function() {
-        addStroke(currentStroke).always(function () {
-            brush.down = false;
-        });
+        sendStrokesMessage([currentStroke]);
+        brush.down = false;
         currentStroke = null;
     });
 
@@ -95,12 +73,30 @@ function init() {
     });
 
     $('#clear-button').click(function () {
-        clear();
+        sendClearMessage();
+        strokes = [];
+        draw();
     });
 
     $('#slider').change(function() {
         brush.size = $(this).val()
     });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width(), canvas.height());
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    for (let stroke of strokes) {
+        ctx.strokeStyle = stroke.color;
+        ctx.lineWidth = stroke.size;
+        ctx.beginPath();
+        ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+        for (let point of stroke.points) {
+            ctx.lineTo(point.x, point.y)
+        }
+        ctx.stroke();
+    }
 }
 
 $(init);
