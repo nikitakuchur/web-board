@@ -3,10 +3,20 @@ let ws;
 function initWebSocket() {
     let protocol = location.protocol === 'https:' ? "wss://" : "ws://";
     ws = new WebSocket(protocol + location.host  + location.pathname + "board-endpoint");
+    ws.onerror = function (e) {
+        console.error('Socket encountered error: ', err.message, 'Closing socket');
+        ws.close();
+    };
+    ws.onclose = function (e) {
+        console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+        setTimeout(function() {
+            initWebSocket();
+        }, 1000);
+    };
 }
 
 function onMessage(f) {
-    ws.onmessage = function(event) {
+    ws.onmessage = function (event) {
         let message = JSON.parse(event.data);
         f(message);
     }
