@@ -49,7 +49,7 @@ function init() {
         }
     }
 
-    canvas.on('mousedown touchstart', function(e) {
+    canvas.on('mousedown touchstart', function (e) {
         brush.down = true;
         currentStroke = {
             color: brush.color,
@@ -60,13 +60,13 @@ function init() {
         mouseEvent(e);
     });
 
-    canvas.on('mouseup touchend', function() {
+    canvas.on('mouseup touchend', function () {
         sendStrokesMessage([currentStroke]);
         brush.down = false;
         currentStroke = null;
     });
 
-    canvas.on('mousemove touchmove', function(e) {
+    canvas.on('mousemove touchmove', function (e) {
         if (brush.down) {
             mouseEvent(e);
         }
@@ -78,9 +78,13 @@ function init() {
         draw();
     });
 
-    $('#slider').change(function() {
-        brush.size = $(this).val()
+    $('#slider').change(function () {
+        brush.size = $(this).val();
     });
+
+    $('#color').change(function () {
+        brush.color = $(this).val();
+    })
 }
 
 function draw() {
