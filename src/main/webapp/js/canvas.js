@@ -32,7 +32,7 @@ export class Canvas {
         });
 
         this.canvas.on('touchstart', (e) => {
-            tool.down(this, e.originalEvent.touches.pageX, e.originalEvent.touches.pageY)
+            tool.down(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY)
         });
 
         // Up
@@ -41,7 +41,7 @@ export class Canvas {
         });
 
         this.canvas.on('touchend', (e) => {
-            tool.up(this, e.originalEvent.touches.pageX, e.originalEvent.touches.pageY)
+            tool.up(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY)
         });
 
         // Move
@@ -50,7 +50,7 @@ export class Canvas {
         });
 
         this.canvas.on('touchmove', (e) => {
-            tool.move(this, e.originalEvent.touches.pageX, e.originalEvent.touches.pageY)
+            tool.move(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY)
         });
     }
 
