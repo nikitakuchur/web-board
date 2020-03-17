@@ -4,7 +4,7 @@ function initWebSocket() {
     let protocol = location.protocol === 'https:' ? "wss://" : "ws://";
     ws = new WebSocket(protocol + location.host  + location.pathname + "board-endpoint");
     ws.onerror = function (e) {
-        console.error('Socket encountered error: ', err.message, 'Closing socket');
+        console.error('Socket encountered error: ', e.message, 'Closing socket');
         ws.close();
     };
     ws.onclose = function (e) {
@@ -42,3 +42,5 @@ function sendClearMessage() {
     });
     ws.send(message);
 }
+
+$(initWebSocket);

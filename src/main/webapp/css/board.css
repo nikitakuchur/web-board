@@ -4,7 +4,7 @@ body {
     overscroll-behavior: none
 }
 
-#draw {
+#canvas {
     display: block;
     position: absolute;
 }

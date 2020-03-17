@@ -6,9 +6,13 @@
         <meta name="viewport" content="width=device-width, user-scalable=no" />
     </head>
     <body>
-        <canvas id="draw"></canvas>
+        <canvas id="canvas"></canvas>
         <div id="tool-bar">
             <button id="clear-button">Clear</button>
+            <select id="tool">
+                <option value="brush">Brush</option>
+                <option value="erase">Erase</option>
+            </select>
             <input id="slider" type="range" min="1" max="50" value="10">
             <select id="color">
                 <option value="black">Black</option>
@@ -19,6 +23,6 @@
         </div>
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/board-service.js"></script>
-        <script src="js/draw.js"></script>
+        <script type="module" src="js/draw.js"></script>
     </body>
 </html>
