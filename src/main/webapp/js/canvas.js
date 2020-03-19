@@ -27,30 +27,30 @@ export class Canvas {
 
     setTool(tool) {
         // Down
-        this.canvas.on('mousedown', (e) => {
+        this.canvas.on('mousedown', e => {
             tool.down(this, e.pageX, e.pageY);
         });
 
-        this.canvas.on('touchstart', (e) => {
-            tool.down(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY)
+        this.canvas.on('touchstart', e => {
+            tool.down(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
         });
 
         // Up
-        this.canvas.on('mouseup', (e) => {
+        this.canvas.on('mouseup', e => {
             tool.up(this, e.pageX, e.pageY);
         });
 
-        this.canvas.on('touchend', (e) => {
-            tool.up(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY)
+        this.canvas.on('touchend', e => {
+            tool.up(this, e.pageX, e.pageY);
         });
 
         // Move
-        this.canvas.on('mousemove', (e) => {
+        this.canvas.on('mousemove', e => {
             tool.move(this, e.pageX, e.pageY);
         });
 
-        this.canvas.on('touchmove', (e) => {
-            tool.move(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY)
+        this.canvas.on('touchmove', e => {
+            tool.move(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
         });
     }
 
