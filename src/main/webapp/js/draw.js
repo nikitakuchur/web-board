@@ -1,13 +1,13 @@
-import {Canvas} from './canvas.js'
+import {Board} from './board.js'
 import {Brush} from './tools/brush.js'
 
 function init() {
-    let canvas = new Canvas();
+    let board = new Board();
     let tool = new Brush();
-    canvas.setTool(tool);
+    board.setTool(tool);
 
     $('#clear-button').click(function () {
-        canvas.clear();
+        board.clear();
     });
 
     $('#slider').change(function () {

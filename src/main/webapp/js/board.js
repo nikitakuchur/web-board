@@ -1,4 +1,4 @@
-export class Canvas {
+export class Board {
 
     constructor() {
         this.canvas = $('#canvas');
@@ -36,11 +36,7 @@ export class Canvas {
         });
 
         // Up
-        this.canvas.on('mouseup', e => {
-            tool.up(this, e.pageX, e.pageY);
-        });
-
-        this.canvas.on('touchend', e => {
+        this.canvas.on('mouseup touchend', e => {
             tool.up(this, e.pageX, e.pageY);
         });
 
