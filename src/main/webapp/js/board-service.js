@@ -1,4 +1,5 @@
 let ws;
+let onMessageFunc;
 
 function initWebSocket() {
     let protocol = location.protocol === 'https:' ? "wss://" : "ws://";
@@ -11,11 +12,13 @@ function initWebSocket() {
         console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
         setTimeout(function() {
             initWebSocket();
+            onMessage(onMessageFunc);
         }, 1000);
     };
 }
 
 function onMessage(f) {
+    onMessageFunc = f;
     ws.onmessage = function (event) {
         let message = JSON.parse(event.data);
         f(message);
