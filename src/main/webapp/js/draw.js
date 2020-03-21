@@ -12,7 +12,7 @@ function init() {
     const tools = {Brush, Eraser};
     let tool = new tools[toolSelect.val()]();
 
-    tool.size = sizeSlider.val();
+    tool.size = parseFloat(sizeSlider.val());
     tool.color = colorPicker.val();
     board.setTool(tool);
 
@@ -21,12 +21,14 @@ function init() {
     });
 
     toolSelect.change(function () {
-        tool = new tools[toolSelect.val()](sizeSlider.val());
+        tool = new tools[toolSelect.val()]();
+        tool.size = parseFloat(sizeSlider.val());
+        tool.color = colorPicker.val();
         board.setTool(tool);
     });
 
     sizeSlider.change(function () {
-        tool.size = $(this).val();
+        tool.size = parseFloat($(this).val());
     });
 
     colorPicker.change(function () {

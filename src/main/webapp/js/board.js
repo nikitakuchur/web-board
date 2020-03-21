@@ -78,7 +78,6 @@ export class Board {
             }
             this.ctx.stroke();
         }
-        console.log(this.lastId);
     }
 
     clear() {

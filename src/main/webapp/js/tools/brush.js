@@ -1,8 +1,8 @@
 export class Brush {
 
-    constructor(color = 'black', size = 10) {
-        this.color = color;
-        this.size = size;
+    constructor() {
+        this.color = 10;
+        this.size = "black";
         this.pressed = false;
         this.currentStroke = null;
     }
