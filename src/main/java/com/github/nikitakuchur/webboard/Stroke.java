@@ -1,9 +1,14 @@
 package com.github.nikitakuchur.webboard;
 
 public class Stroke {
+    private int id;
     private String color = "#000000";
     private double size = 10;
     private Point[] points;
+
+    public int getId() {
+        return id;
+    }
 
     public String getColor() {
         return color;

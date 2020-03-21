@@ -1,20 +1,35 @@
 import {Board} from './board.js'
 import {Brush} from './tools/brush.js'
+import {Eraser} from './tools/eraser.js'
 
 function init() {
-    let board = new Board();
-    let tool = new Brush();
+    const clearButton = $('#clear-button');
+    const toolSelect = $('#tool-select');
+    const sizeSlider = $('#size-slider');
+    const colorPicker = $('#color-picker');
+
+    const board = new Board();
+    const tools = {Brush, Eraser};
+    let tool = new tools[toolSelect.val()]();
+
+    tool.size = sizeSlider.val();
+    tool.color = colorPicker.val();
     board.setTool(tool);
 
-    $('#clear-button').click(function () {
+    clearButton.click(function () {
         board.clear();
     });
 
-    $('#slider').change(function () {
+    toolSelect.change(function () {
+        tool = new tools[toolSelect.val()](sizeSlider.val());
+        board.setTool(tool);
+    });
+
+    sizeSlider.change(function () {
         tool.size = $(this).val();
     });
 
-    $('#color').change(function () {
+    colorPicker.change(function () {
         tool.color = $(this).val();
     });
 }

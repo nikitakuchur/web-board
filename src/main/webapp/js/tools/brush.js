@@ -7,36 +7,38 @@ export class Brush {
         this.currentStroke = null;
     }
 
-    mouseEvent(canvas, x, y) {
+    mouseEvent(board, x, y) {
         if (this.currentStroke != null) {
             this.currentStroke.points.push({
                 x: x,
                 y: y,
             });
         }
-        canvas.draw();
+        board.draw();
     }
 
-    down(canvas, x, y) {
+    down(board, x, y) {
         this.pressed = true;
+        board.lastId++;
         this.currentStroke = {
+            id: board.lastId,
             color: this.color,
             size: this.size,
             points: [],
         };
-        canvas.strokes.push(this.currentStroke);
-        this.mouseEvent(canvas, x, y);
+        board.strokes.set(board.lastId, this.currentStroke);
+        this.mouseEvent(board, x, y);
     }
 
-    up(canvas, x, y) {
+    up(board, x, y) {
         sendStrokesMessage([this.currentStroke]);
         this.pressed = false;
         this.currentStroke = null;
     }
 
-    move(canvas, x, y) {
+    move(board, x, y) {
         if (this.pressed) {
-            this.mouseEvent(canvas, x, y);
+            this.mouseEvent(board, x, y);
         }
     }
 }

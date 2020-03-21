@@ -3,22 +3,21 @@ package com.github.nikitakuchur.webboard;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @ServerEndpoint(value = "/board-endpoint", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 public class BoardEndpoint {
 
     private Session session;
     private static final List<BoardEndpoint> boardEndpoints = new ArrayList<>();
-    private static final List<Stroke> strokes = new ArrayList<>();
+    private static final Map<Integer, Stroke> strokes = new LinkedHashMap<>();
 
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
         boardEndpoints.add(this);
         try {
-            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(strokes));
+            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(new ArrayList<>(strokes.values())));
         } catch (IOException | EncodeException e) {
             e.printStackTrace();
         }
@@ -29,9 +28,11 @@ public class BoardEndpoint {
         if (message.isClear()) {
             strokes.clear();
         }
-        List<Stroke> newStrokes = message.getStrokes();
-        if (newStrokes != null) {
-            strokes.addAll(newStrokes);
+        if (message.getStrokes() != null) {
+            message.getStrokes().forEach(stroke -> strokes.put(stroke.getId(), stroke));
+        }
+        if (message.getDeleted() != -1) {
+            strokes.remove(message.getDeleted());
         }
         broadcast(message);
     }
