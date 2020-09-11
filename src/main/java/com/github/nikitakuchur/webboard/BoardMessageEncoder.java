@@ -1,17 +1,17 @@
 package com.github.nikitakuchur.webboard;
 
-import com.google.gson.Gson;
-
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
 public class BoardMessageEncoder implements Encoder.Text<BoardMessage>  {
 
-    private static final Gson gson = new Gson();
+    private static final Jsonb jsonb = JsonbBuilder.create();
 
     @Override
     public String encode(BoardMessage message) {
-        return gson.toJson(message);
+        return jsonb.toJson(message);
     }
 
     @Override

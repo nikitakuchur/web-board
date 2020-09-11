@@ -20,7 +20,7 @@ export class Board {
                 this.strokes = new Map();
                 this.lastId = -1;
             }
-            if (data.strokes != null) {
+            if (data.strokes.length > 0) {
                 data.strokes.forEach(value => {
                     this.strokes.set(value.id, value);
                     if (value.id > this.lastId) {

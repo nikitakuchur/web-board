@@ -1,10 +1,18 @@
 package com.github.nikitakuchur.webboard;
 
+import javax.json.bind.annotation.JsonbCreator;
+import javax.json.bind.annotation.JsonbProperty;
+
 public class Stroke {
-    private int id;
+    private final int id;
     private String color = "#000000";
     private double size = 10;
     private Point[] points;
+
+    @JsonbCreator
+    public Stroke(@JsonbProperty("id") int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

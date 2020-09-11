@@ -2,6 +2,7 @@ package com.github.nikitakuchur.webboard;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class BoardEndpoint {
         this.session = session;
         boardEndpoints.add(this);
         try {
-            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(new ArrayList<>(strokes.values())));
+            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(strokes.values()));
         } catch (IOException | EncodeException e) {
             e.printStackTrace();
         }
@@ -28,7 +29,7 @@ public class BoardEndpoint {
         if (message.isClear()) {
             strokes.clear();
         }
-        if (message.getStrokes() != null) {
+        if (!message.getStrokes().isEmpty()) {
             message.getStrokes().forEach(stroke -> strokes.put(stroke.getId(), stroke));
         }
         if (message.getDeleted() != -1) {
