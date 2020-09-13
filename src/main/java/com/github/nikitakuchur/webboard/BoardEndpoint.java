@@ -1,24 +1,29 @@
 package com.github.nikitakuchur.webboard;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 import java.io.IOException;
 import java.util.*;
 
+@Stateful
 @ServerEndpoint(value = "/board-endpoint", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 public class BoardEndpoint {
 
+    @EJB
+    private Board board;
+
     private Session session;
     private static final List<BoardEndpoint> boardEndpoints = new ArrayList<>();
-    private static final Map<Integer, Stroke> strokes = new LinkedHashMap<>();
 
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
         boardEndpoints.add(this);
         try {
-            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(strokes.values()));
+            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(board.getStrokes()));
         } catch (IOException | EncodeException e) {
             e.printStackTrace();
         }
@@ -27,25 +32,15 @@ public class BoardEndpoint {
     @OnMessage
     public void onMessage(Session session, BoardMessage message) {
         if (message.isClear()) {
-            strokes.clear();
+            board.clear();
         }
         if (!message.getStrokes().isEmpty()) {
-            message.getStrokes().forEach(stroke -> strokes.put(stroke.getId(), stroke));
+            board.addStrokes(message.getStrokes());
         }
         if (message.getDeleted() != -1) {
-            strokes.remove(message.getDeleted());
+            board.removeStroke(message.getDeleted());
         }
         broadcast(message);
-    }
-
-    @OnClose
-    public void onClose(Session session) {
-        boardEndpoints.remove(this);
-    }
-
-    @OnError
-    public void onError(Session session, Throwable throwable) {
-        // Do error handling here
     }
 
     private void broadcast(BoardMessage message) {
@@ -58,5 +53,15 @@ public class BoardEndpoint {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    @OnClose
+    public void onClose(Session session) {
+        boardEndpoints.remove(this);
+    }
+
+    @OnError
+    public void onError(Session session, Throwable throwable) {
+        // Do error handling here
     }
 }
