@@ -6,22 +6,21 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 import java.io.IOException;
-import java.util.*;
 
 @Stateful
 @ServerEndpoint(value = "/board-endpoint", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 public class BoardEndpoint {
-
     @EJB
     private Board board;
+    @EJB
+    private EndpointBroadcaster broadcaster;
 
     private Session session;
-    private static final List<BoardEndpoint> boardEndpoints = new ArrayList<>();
 
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        boardEndpoints.add(this);
+        broadcaster.add(this);
         try {
             session.getBasicRemote().sendObject(BoardMessage.strokesMessage(board.getStrokes()));
         } catch (IOException | EncodeException e) {
@@ -40,28 +39,20 @@ public class BoardEndpoint {
         if (message.getDeleted() != -1) {
             board.removeStroke(message.getDeleted());
         }
-        broadcast(message);
-    }
-
-    private void broadcast(BoardMessage message) {
-        boardEndpoints.stream()
-                .filter(endpoint -> endpoint != this)
-                .forEach(endpoint -> {
-                    try {
-                        endpoint.session.getBasicRemote().sendObject(message);
-                    } catch (IOException | EncodeException e) {
-                        e.printStackTrace();
-                    }
-                });
+        broadcaster.broadcast(this, message);
     }
 
     @OnClose
     public void onClose(Session session) {
-        boardEndpoints.remove(this);
+        broadcaster.remove(this);
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
         // Do error handling here
+    }
+
+    public Session getSession() {
+        return session;
     }
 }
