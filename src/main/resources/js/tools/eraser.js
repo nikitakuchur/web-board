@@ -10,9 +10,9 @@ export class Eraser {
             let point1 = stroke.points[0];
             for (let i = 0; i < stroke.points.length; i++) {
                 let point2 = stroke.points[i];
-                if (this.getMinDistance(point1, point2, x, y) < (this.size + stroke.size) / 2) {
+                if (this.calcMinDistance(point1, point2, x, y) < (this.size + stroke.size) / 2) {
                     sendDeleteMessage(stroke.id);
-                    board.strokes.delete(stroke.id);
+                    board.removeStroke(stroke.id);
                 }
                 point1 = stroke.points[i];
             }
@@ -20,7 +20,7 @@ export class Eraser {
         board.draw();
     }
 
-    getMinDistance(point1, point2, x, y) {
+    calcMinDistance(point1, point2, x, y) {
         let t = (x - point1.x) * (point2.x - point1.x) + (y - point1.y) * (point2.y - point1.y);
         t /= Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2);
         t = t < 0 || isNaN(t) ? 0 : t;

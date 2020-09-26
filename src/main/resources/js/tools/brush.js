@@ -1,32 +1,21 @@
 export class Brush {
 
     constructor() {
-        this.color = 10;
-        this.size = "black";
+        this.color = "black";
+        this.size = 10;
         this.pressed = false;
         this.currentStroke = null;
     }
 
-    mouseEvent(board, x, y) {
-        if (this.currentStroke != null) {
-            this.currentStroke.points.push({
-                x: x,
-                y: y,
-            });
-        }
-        board.draw();
-    }
-
     down(board, x, y) {
         this.pressed = true;
-        board.lastId++;
         this.currentStroke = {
-            id: board.lastId,
+            id: null,
             color: this.color,
             size: this.size,
             points: [],
         };
-        board.strokes.set(board.lastId, this.currentStroke);
+        board.strokes.push(this.currentStroke);
         this.mouseEvent(board, x, y);
     }
 
@@ -40,5 +29,15 @@ export class Brush {
         if (this.pressed) {
             this.mouseEvent(board, x, y);
         }
+    }
+
+    mouseEvent(board, x, y) {
+        if (this.currentStroke != null) {
+            this.currentStroke.points.push({
+                x: x,
+                y: y,
+            });
+        }
+        board.draw();
     }
 }

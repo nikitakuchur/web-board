@@ -11,9 +11,9 @@ import java.io.IOException;
 @ServerEndpoint(value = "/board-endpoint", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 public class BoardEndpoint {
     @EJB
-    private Board board;
+    private BoardService boardService;
     @EJB
-    private EndpointBroadcaster broadcaster;
+    private Broadcaster broadcaster;
 
     private Session session;
 
@@ -22,7 +22,7 @@ public class BoardEndpoint {
         this.session = session;
         broadcaster.add(this);
         try {
-            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(board.getStrokes()));
+            session.getBasicRemote().sendObject(BoardMessage.strokesMessage(boardService.getStrokes()));
         } catch (IOException | EncodeException e) {
             e.printStackTrace();
         }
@@ -31,13 +31,13 @@ public class BoardEndpoint {
     @OnMessage
     public void onMessage(Session session, BoardMessage message) {
         if (message.isClear()) {
-            board.clear();
+            boardService.clear();
         }
         if (!message.getStrokes().isEmpty()) {
-            board.addStrokes(message.getStrokes());
+            boardService.addStrokes(message.getStrokes());
         }
         if (message.getDeleted() != -1) {
-            board.removeStroke(message.getDeleted());
+            boardService.removeStroke(message.getDeleted());
         }
         broadcaster.broadcast(this, message);
     }

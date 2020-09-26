@@ -9,7 +9,7 @@ import javax.websocket.EncodeException;
 import javax.websocket.Session;
 
 @Singleton
-public class EndpointBroadcaster {
+public class Broadcaster {
     private final List<BoardEndpoint> boardEndpoints = new ArrayList<>();
 
     public void add(BoardEndpoint endpoint) {
@@ -22,7 +22,7 @@ public class EndpointBroadcaster {
 
     public void broadcast(BoardEndpoint sender, BoardMessage message) {
         boardEndpoints.stream()
-                .filter(endpoint -> endpoint != sender)
+                //.filter(endpoint -> endpoint != sender)
                 .forEach(endpoint -> {
                     try {
                         Session session = endpoint.getSession();

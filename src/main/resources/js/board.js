@@ -3,8 +3,7 @@ export class Board {
     constructor() {
         this.canvas = $('#canvas');
         this.ctx = this.canvas[0].getContext('2d');
-        this.strokes = new Map();
-        this.lastId = -1;
+        this.strokes = [];
 
         let updateSize = () => {
             this.canvas.attr({
@@ -17,22 +16,35 @@ export class Board {
 
         onMessage(data => {
             if (data.clear) {
-                this.strokes = new Map();
-                this.lastId = -1;
+                this.strokes = [];
             }
             if (data.strokes.length > 0) {
-                data.strokes.forEach(value => {
-                    this.strokes.set(value.id, value);
-                    if (value.id > this.lastId) {
-                        this.lastId = value.id;
-                    }
-                });
+                // If id of the last stroke is null, then we got the stroke that we just send
+                if (this.strokes.length > 0 && this.strokes[this.strokes.length - 1].id == null) {
+                    // And we need to assign the received id
+                    this.strokes[this.strokes.length - 1].id = data.strokes[0].id;
+                } else {
+                    data.strokes.forEach(value => {
+                        this.strokes.push(value);
+                    });
+                }
             }
             if (data.deleted !== -1) {
-                this.strokes.delete(data.deleted);
+                this.removeStroke(data.deleted);
             }
             this.draw();
         });
+    }
+
+    removeStroke(id) {
+        let i = 0;
+        while (this.strokes[i].id !== id) {
+            i++;
+            if (i >= this.strokes.length) {
+                return;
+            }
+        }
+        this.strokes.splice(i, 1);
     }
 
     setTool(tool) {
@@ -82,8 +94,7 @@ export class Board {
 
     clear() {
         sendClearMessage();
-        this.strokes = new Map();
-        this.lastId = -1;
+        this.strokes = [];
         this.draw();
     }
 }
