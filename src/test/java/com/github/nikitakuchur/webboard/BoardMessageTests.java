@@ -6,8 +6,8 @@ import java.util.Collections;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 
-import com.github.nikitakuchur.webboard.model.Point;
-import com.github.nikitakuchur.webboard.model.Stroke;
+import com.github.nikitakuchur.webboard.models.Point;
+import com.github.nikitakuchur.webboard.models.Stroke;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

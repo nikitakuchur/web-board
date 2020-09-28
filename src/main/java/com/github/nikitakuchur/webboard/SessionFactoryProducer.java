@@ -3,8 +3,8 @@ package com.github.nikitakuchur.webboard;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
-import com.github.nikitakuchur.webboard.model.Point;
-import com.github.nikitakuchur.webboard.model.Stroke;
+import com.github.nikitakuchur.webboard.models.Point;
+import com.github.nikitakuchur.webboard.models.Stroke;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

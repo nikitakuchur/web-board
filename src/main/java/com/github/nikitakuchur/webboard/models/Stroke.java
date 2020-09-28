@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard.model;
+package com.github.nikitakuchur.webboard.models;
 
 import java.util.ArrayList;
 import java.util.Collections;

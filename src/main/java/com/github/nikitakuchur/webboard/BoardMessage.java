@@ -9,7 +9,7 @@ import java.util.Objects;
 import javax.json.bind.annotation.JsonbCreator;
 import javax.json.bind.annotation.JsonbProperty;
 
-import com.github.nikitakuchur.webboard.model.Stroke;
+import com.github.nikitakuchur.webboard.models.Stroke;
 
 public class BoardMessage {
     private final List<Stroke> strokes;

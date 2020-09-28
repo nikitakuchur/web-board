@@ -2,7 +2,7 @@ package com.github.nikitakuchur.webboard.dao;
 
 import java.util.List;
 
-import com.github.nikitakuchur.webboard.model.Point;
+import com.github.nikitakuchur.webboard.models.Point;
 
 public interface PointDao {
     void save(Point point);

@@ -9,7 +9,7 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 
 import com.github.nikitakuchur.webboard.dao.StrokeDao;
-import com.github.nikitakuchur.webboard.model.Stroke;
+import com.github.nikitakuchur.webboard.models.Stroke;
 
 @Singleton
 @TransactionManagement(TransactionManagementType.BEAN)

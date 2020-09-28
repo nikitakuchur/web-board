@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard.model;
+package com.github.nikitakuchur.webboard.models;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
