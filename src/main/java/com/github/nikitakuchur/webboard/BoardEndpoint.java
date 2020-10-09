@@ -8,7 +8,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 
 @Stateful
-@ServerEndpoint(value = "/board-endpoint", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
+@ServerEndpoint(value = "/api/board-endpoint", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 public class BoardEndpoint {
     @EJB
     private BoardService boardService;

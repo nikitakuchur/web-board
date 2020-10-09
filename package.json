@@ -1,0 +1,32 @@
+{
+  "name": "web-board",
+  "version": "1.0.0",
+  "devDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-websocket": "^2.1.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^4.3.0",
+    "mini-css-extract-plugin": "^0.11.2",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "babel": {
+    "presets": [
+      "react"
+    ],
+    "plugins": [
+      "transform-class-properties"
+    ]
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  }
+}
