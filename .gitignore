@@ -7,6 +7,7 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+package-lock.json
 node/
 node_modules/
 src/main/webapp/static/dist/
