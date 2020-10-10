@@ -58,7 +58,7 @@ export default class Board extends Component {
     }
 
     handleTouchStart = e => {
-        this.props.tool.down(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
+        this.props.tool.down(this, e.touches[0].pageX, e.touches[0].pageY);
     }
 
     handleMouseUp = e => {
@@ -74,7 +74,7 @@ export default class Board extends Component {
     }
 
     handleTouchMove = e => {
-        this.props.tool.move(this, e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
+        this.props.tool.move(this, e.touches[0].pageX, e.touches[0].pageY);
     }
 
     handleMessage = (data) => {
