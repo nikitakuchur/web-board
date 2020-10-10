@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 
-export default class MainPage extends Component {
+class MainPage extends Component {
     render() {
         return (
             <React.Fragment>
@@ -10,3 +10,5 @@ export default class MainPage extends Component {
             </React.Fragment>);
     }
 }
+
+export default MainPage;

@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import {Brush} from "../tools/Brush";
 import {Eraser} from "../tools/Eraser";
 import {Button, Form} from "react-bootstrap";
-import Col from "react-bootstrap/Col";
+import ColorPicker from "./ColorPicker";
 
-export default class ToolBar extends Component {
+class ToolBar extends Component {
     static defaultProps = {
         onClearButtonClick: () => {
         },
         onToolUpdate: () => {
         },
-    }
+    };
 
     tools = {
         brush: new Brush(),
@@ -37,29 +37,16 @@ export default class ToolBar extends Component {
         this.props.onToolUpdate(tool);
     };
 
-    handleBrushColorChange = (event) => {
+    handleBrushColorChange = (color) => {
         let tool = this.state.tool;
         if (tool.color !== undefined) {
-            tool.color = event.target.value;
+            tool.color = color;
             this.setState({tool: tool});
             this.props.onToolUpdate(tool);
         }
     };
 
     render() {
-        let colorPicker;
-        if (this.state.tool.color !== undefined) {
-            colorPicker = (
-                <Form.Group>
-                    <Form.Control as="select" id="color-picker" onChange={this.handleBrushColorChange}>
-                        <option value="black">Black</option>
-                        <option value="red">Red</option>
-                        <option value="green">Green</option>
-                        <option value="blue">Blue</option>
-                    </Form.Control>
-                </Form.Group>
-            );
-        }
         return (
             <Form inline id="tool-bar">
                 <Form.Group>
@@ -77,8 +64,10 @@ export default class ToolBar extends Component {
                                   value={this.state.tool.size !== undefined ? this.state.tool.size : 10}
                                   onChange={this.handleBrushSizeChange}/>
                 </Form.Group>
-                {colorPicker}
+                {this.state.tool.color !== undefined ? <ColorPicker onChange={this.handleBrushColorChange}/> : null}
             </Form>
         );
     }
 }
+
+export default ToolBar;

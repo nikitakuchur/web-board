@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 
-export default class CreateBoardPage extends Component {
+class CreateBoardPage extends Component {
     render() {
         return (<h4>Create board</h4>);
     }
 }
+
+export default CreateBoardPage;

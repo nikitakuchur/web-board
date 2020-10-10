@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Brush} from "../tools/Brush";
 import Websocket from "react-websocket";
 
-export default class Board extends Component {
+class Board extends Component {
     static defaultProps = {
         tool: new Brush(),
     }
@@ -162,3 +162,5 @@ export default class Board extends Component {
         );
     }
 }
+
+export default Board;

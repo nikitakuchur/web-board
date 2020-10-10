@@ -4,7 +4,7 @@ import ToolBar from "../components/ToolBar";
 import Board from "../components/Board";
 import {Brush} from "../tools/Brush";
 
-export default class BoardPage extends Component {
+class BoardPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,3 +30,5 @@ export default class BoardPage extends Component {
         );
     }
 }
+
+export default BoardPage;
