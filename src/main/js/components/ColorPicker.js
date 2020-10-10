@@ -8,10 +8,18 @@ class ColorPicker extends React.Component {
         },
     };
 
-    state = {
-        displayColorPicker: false,
-        color: '#000000',
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            displayColorPicker: false,
+            color: "#000000",
+        };
+    }
+
+    setColor(color) {
+        this.setState({color: color});
+        this.props.onChange(color);
+    }
 
     handleClick = () => {
         this.setState({displayColorPicker: !this.state.displayColorPicker});

@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import {Brush} from "../tools/Brush";
 import {Eraser} from "../tools/Eraser";
-import {Button, Form} from "react-bootstrap";
+import {Image, Button, Form, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import ColorPicker from "./ColorPicker";
+
+import clearIcon from '../../img/clear.png';
+import brushIcon from '../../img/brush.png';
+import pipetteIcon from '../../img/pipette.png';
+import eraserIcon from '../../img/eraser.png';
+import {Pipette} from "../tools/Pipette";
 
 class ToolBar extends Component {
     static defaultProps = {
@@ -10,10 +16,13 @@ class ToolBar extends Component {
         },
         onToolUpdate: () => {
         },
+        onColorChange: () => {
+        },
     };
 
     tools = {
         brush: new Brush(),
+        pipette: new Pipette(),
         eraser: new Eraser(),
     }
 
@@ -21,26 +30,28 @@ class ToolBar extends Component {
         super(props);
         this.state = {
             tool: new Brush(),
+            color: "#000000",
         };
+        this.colorPickerRef = React.createRef();
     }
 
-    handleToolChange = (event) => {
-        let tool = this.tools[event.target.value];
+    setColor(color) {
+        this.colorPickerRef.current.setColor(color);
+    }
+
+    handleToolChange = (value) => {
+        let tool = this.tools[value];
+        if (tool.color !== undefined) {
+            tool.color = this.state.color;
+        }
         this.setState({tool: tool});
         this.props.onToolUpdate(tool);
     }
 
     handleBrushSizeChange = (event) => {
         let tool = this.state.tool;
-        tool.size = Number(event.target.value);
-        this.setState({tool: tool});
-        this.props.onToolUpdate(tool);
-    };
-
-    handleBrushColorChange = (color) => {
-        let tool = this.state.tool;
-        if (tool.color !== undefined) {
-            tool.color = color;
+        if (tool.size !== undefined) {
+            tool.size = Number(event.target.value);
             this.setState({tool: tool});
             this.props.onToolUpdate(tool);
         }
@@ -49,22 +60,36 @@ class ToolBar extends Component {
     render() {
         return (
             <Form inline id="tool-bar">
-                <Form.Group>
-                    <Button variant="primary" id="clear-button"
-                            onClick={this.props.onClearButtonClick}>Clear</Button>
+                <Form.Group className="ml-1 mr-1">
+                    <Button variant="light" id="clear-button"
+                            onClick={this.props.onClearButtonClick}>
+                        <Image width="24px" src={clearIcon}/>
+                    </Button>
                 </Form.Group>
-                <Form.Group>
-                    <Form.Control as="select" id="tool-select" onChange={this.handleToolChange}>
-                        <option value="brush">Brush</option>
-                        <option value="eraser">Eraser</option>
-                    </Form.Control>
+                <Form.Group className="mr-1">
+                    <ToggleButtonGroup type="radio" name="options" defaultValue="brush"
+                                       onChange={this.handleToolChange}>
+                        <ToggleButton variant="light" value="brush">
+                            <Image width="24px" src={brushIcon}/>
+                        </ToggleButton>
+                        <ToggleButton variant="light" value="pipette">
+                            <Image width="24px" src={pipetteIcon}/>
+                        </ToggleButton>
+                        <ToggleButton variant="light" value="eraser">
+                            <Image width="24px" src={eraserIcon}/>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
                 </Form.Group>
-                <Form.Group>
-                    <Form.Control type="range" id="size-slider" min="1" max="50"
-                                  value={this.state.tool.size !== undefined ? this.state.tool.size : 10}
-                                  onChange={this.handleBrushSizeChange}/>
+                <Form.Group className="mr-1">
+                    <ColorPicker ref={this.colorPickerRef} onChange={this.props.onColorChange}/>
                 </Form.Group>
-                {this.state.tool.color !== undefined ? <ColorPicker onChange={this.handleBrushColorChange}/> : null}
+                {this.state.tool.size !== undefined ?
+                    <Form.Group>
+                        <Form.Control type="range" id="size-slider" min="1" max="50"
+                                      value={this.state.tool.size}
+                                      onChange={this.handleBrushSizeChange}/>
+                    </Form.Group> : null}
+
             </Form>
         );
     }

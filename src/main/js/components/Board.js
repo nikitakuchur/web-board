@@ -5,6 +5,7 @@ import Websocket from "react-websocket";
 class Board extends Component {
     static defaultProps = {
         tool: new Brush(),
+        color: "#000000",
     }
 
     constructor(props) {

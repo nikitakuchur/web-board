@@ -2,7 +2,6 @@ export class Brush {
 
     constructor() {
         this.size = 10;
-        this.color = "black";
         this.pressed = false;
         this.currentStroke = null;
     }
@@ -12,7 +11,7 @@ export class Brush {
         this.currentStroke = {
             id: null,
             size: this.size,
-            color: this.color,
+            color: board.props.color,
             points: [],
         };
         board.addStroke(this.currentStroke);
