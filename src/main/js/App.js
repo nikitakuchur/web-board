@@ -4,6 +4,7 @@ import MainPage from "./pages/MainPage";
 import CreateBoardPage from "./pages/CreateBoardPage";
 import BoardPage from "./pages/BoardPage";
 import {BrowserRouter, Route} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
     render() {

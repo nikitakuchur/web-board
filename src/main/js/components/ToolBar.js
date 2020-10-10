@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Brush} from "../tools/Brush";
 import {Eraser} from "../tools/Eraser";
+import {Button, Form} from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 
-export default class BoardPage extends Component {
+export default class ToolBar extends Component {
     static defaultProps = {
         onClearButtonClick: () => {
         },
@@ -48,26 +50,35 @@ export default class BoardPage extends Component {
         let colorPicker;
         if (this.state.tool.color !== undefined) {
             colorPicker = (
-                <select id="color-picker" onChange={this.handleBrushColorChange}>
-                    <option value="black">Black</option>
-                    <option value="red">Red</option>
-                    <option value="green">Green</option>
-                    <option value="blue">Blue</option>
-                </select>
+                <Form.Group>
+                    <Form.Control as="select" id="color-picker" onChange={this.handleBrushColorChange}>
+                        <option value="black">Black</option>
+                        <option value="red">Red</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
+                    </Form.Control>
+                </Form.Group>
             );
         }
         return (
-            <div id="tool-bar">
-                <button id="clear-button" onClick={this.props.onClearButtonClick}>Clear</button>
-                <select id="tool-select" onChange={this.handleToolChange}>
-                    <option value="brush">Brush</option>
-                    <option value="eraser">Eraser</option>
-                </select>
-                <input id="size-slider" type="range" min="1" max="50"
-                       value={this.state.tool.size !== undefined ? this.state.tool.size : 10}
-                       onChange={this.handleBrushSizeChange}/>
+            <Form inline id="tool-bar">
+                <Form.Group>
+                    <Button variant="primary" id="clear-button"
+                            onClick={this.props.onClearButtonClick}>Clear</Button>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control as="select" id="tool-select" onChange={this.handleToolChange}>
+                        <option value="brush">Brush</option>
+                        <option value="eraser">Eraser</option>
+                    </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control type="range" id="size-slider" min="1" max="50"
+                                  value={this.state.tool.size !== undefined ? this.state.tool.size : 10}
+                                  onChange={this.handleBrushSizeChange}/>
+                </Form.Group>
                 {colorPicker}
-            </div>
+            </Form>
         );
     }
 }
