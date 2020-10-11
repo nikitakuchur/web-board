@@ -6,7 +6,9 @@ export class Eraser {
     }
 
     mouseEvent(board, x, y) {
-        for (let [index, stroke] of board.getStrokes().entries()) {
+        let strokes = board.getStrokes();
+        for (let index = strokes.length - 1; index >= 0; index--) {
+            let stroke = strokes[index];
             let point1 = stroke.points[0];
             for (let i = 0; i < stroke.points.length; i++) {
                 let point2 = stroke.points[i];
