@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Brush} from "../tools/Brush";
 import Websocket from "react-websocket";
+import {BoardContext} from "../contexts/BoardContext";
 
 class Board extends Component {
     static defaultProps = {
         tool: new Brush(),
-        color: "#000000",
     }
 
     constructor(props) {
@@ -163,5 +163,7 @@ class Board extends Component {
         );
     }
 }
+
+Board.contextType = BoardContext;
 
 export default Board;

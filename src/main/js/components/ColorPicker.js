@@ -4,6 +4,7 @@ import {SketchPicker} from 'react-color';
 
 class ColorPicker extends React.Component {
     static defaultProps = {
+        color: "#000000",
         onChange: () => {
         },
     };
@@ -12,13 +13,8 @@ class ColorPicker extends React.Component {
         super(props);
         this.state = {
             displayColorPicker: false,
-            color: "#000000",
+            color: this.props.color,
         };
-    }
-
-    setColor(color) {
-        this.setState({color: color});
-        this.props.onChange(color);
     }
 
     handleClick = () => {
@@ -30,7 +26,6 @@ class ColorPicker extends React.Component {
     };
 
     handleChange = (color) => {
-        this.setState({color: color.hex});
         this.props.onChange(color.hex);
     };
 
@@ -41,7 +36,7 @@ class ColorPicker extends React.Component {
                     width: '54px',
                     height: '28px',
                     borderRadius: '2px',
-                    background: `${this.state.color}`,
+                    background: `${this.props.color}`,
                 },
                 swatch: {
                     padding: '5px',
@@ -73,7 +68,7 @@ class ColorPicker extends React.Component {
                 <div>
                     {this.state.displayColorPicker ? <div style={styles.popover}>
                         <div style={styles.cover} onClick={this.handleClose}/>
-                        <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                        <SketchPicker color={this.props.color} onChange={this.handleChange}/>
                     </div> : null}
                 </div>
             </React.Fragment>

@@ -11,7 +11,7 @@ export class Brush {
         this.currentStroke = {
             id: null,
             size: this.size,
-            color: board.props.color,
+            color: board.context.color,
             points: [],
         };
         board.addStroke(this.currentStroke);

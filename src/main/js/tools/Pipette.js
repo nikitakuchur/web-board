@@ -12,13 +12,13 @@ export class Pipette {
             for (let i = 0; i < stroke.points.length; i++) {
                 let point2 = stroke.points[i];
                 if (this.calcMinDistance(point1, point2, x, y) < stroke.size / 2) {
-                    board.props.setColor(stroke.color);
+                    board.context.setColor(stroke.color);
                     return;
                 }
                 point1 = stroke.points[i];
             }
         }
-        board.props.setColor("white");
+        board.context.setColor("white");
     }
 
     calcMinDistance(point1, point2, x, y) {

@@ -3,20 +3,20 @@ import {Brush} from "../tools/Brush";
 import {Eraser} from "../tools/Eraser";
 import {Image, Button, Form, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import ColorPicker from "./ColorPicker";
+import RangeSlider from 'react-bootstrap-range-slider';
+import {Pipette} from "../tools/Pipette";
+import {BoardContext} from "../contexts/BoardContext";
 
 import clearIcon from '../../img/clear.png';
 import brushIcon from '../../img/brush.png';
 import pipetteIcon from '../../img/pipette.png';
 import eraserIcon from '../../img/eraser.png';
-import {Pipette} from "../tools/Pipette";
 
 class ToolBar extends Component {
     static defaultProps = {
         onClearButtonClick: () => {
         },
         onToolUpdate: () => {
-        },
-        onColorChange: () => {
         },
     };
 
@@ -32,11 +32,6 @@ class ToolBar extends Component {
             tool: new Brush(),
             color: "#000000",
         };
-        this.colorPickerRef = React.createRef();
-    }
-
-    setColor(color) {
-        this.colorPickerRef.current.setColor(color);
     }
 
     handleToolChange = (value) => {
@@ -81,18 +76,17 @@ class ToolBar extends Component {
                     </ToggleButtonGroup>
                 </Form.Group>
                 <Form.Group className="mr-1">
-                    <ColorPicker ref={this.colorPickerRef} onChange={this.props.onColorChange}/>
+                    <ColorPicker color={this.context.color} onChange={this.context.setColor}/>
                 </Form.Group>
                 {this.state.tool.size !== undefined ?
-                    <Form.Group>
-                        <Form.Control type="range" id="size-slider" min="1" max="50"
-                                      value={this.state.tool.size}
-                                      onChange={this.handleBrushSizeChange}/>
-                    </Form.Group> : null}
-
+                    (<RangeSlider min="1" max="50"
+                                  value={this.state.tool.size}
+                                  onChange={this.handleBrushSizeChange}/>) : null}
             </Form>
         );
     }
 }
+
+ToolBar.contextType = BoardContext;
 
 export default ToolBar;
