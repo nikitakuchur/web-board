@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Card, Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 class MainPage extends Component {
@@ -6,7 +7,15 @@ class MainPage extends Component {
         return (
             <React.Fragment>
                 <h4>Main page</h4>
-                <Link to={{ pathname: '/board' }}>Go to board</Link>
+                <Card style={{width: '18rem'}}>
+                    <Card.Body style={{padding: '14px'}}>
+                        <Card.Title>Board</Card.Title>
+                        <Card.Text>The board description</Card.Text>
+                        <Link to={{pathname: '/board'}}>
+                            <Button variant="primary">Go to board</Button>
+                        </Link>
+                    </Card.Body>
+                </Card>
             </React.Fragment>);
     }
 }
