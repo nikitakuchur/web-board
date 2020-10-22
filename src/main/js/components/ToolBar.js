@@ -79,7 +79,7 @@ class ToolBar extends Component {
                     <ColorPicker color={this.context.color} onChange={this.context.setColor}/>
                 </Form.Group>
                 {this.state.tool.size !== undefined ?
-                    (<RangeSlider min="1" max="50"
+                    (<RangeSlider min={1} max={50}
                                   value={this.state.tool.size}
                                   onChange={this.handleBrushSizeChange}/>) : null}
             </Form>
