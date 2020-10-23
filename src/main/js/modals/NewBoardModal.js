@@ -21,7 +21,8 @@ class NewBoardModal extends Component {
                 show={this.props.show}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered>
+                centered
+                onHide={this.props.onCancelButtonClick}>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         New board
@@ -39,7 +40,6 @@ class NewBoardModal extends Component {
                         }
                         this.props.onOkButtonClick(board)
                     }}>Ok</Button>
-                    <Button onClick={this.props.onCancelButtonClick}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );
