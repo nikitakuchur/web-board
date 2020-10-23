@@ -28,7 +28,7 @@ class NewBoardModal extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form.Control ref={this.nameRef} placeholder="Name"/>
+                    <Form.Control ref={this.nameRef} className="mb-1" placeholder="Name"/>
                     <Form.Control ref={this.descriptionRef} as="textarea" rows={2} placeholder="Description"/>
                 </Modal.Body>
                 <Modal.Footer>
