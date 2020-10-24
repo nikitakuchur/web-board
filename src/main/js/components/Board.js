@@ -5,6 +5,8 @@ import {BoardContext} from "../contexts/BoardContext";
 
 class Board extends Component {
     static defaultProps = {
+        onError: (error) => {
+        },
         tool: new Brush(),
     }
 
@@ -81,22 +83,35 @@ class Board extends Component {
     handleMessage = (data) => {
         let result = JSON.parse(data);
         console.log(result);
-        if (result.clear) {
+        if (result.error) {
+            this.handleError(result);
+            return;
+        }
+        this.handleBoardMessage(result);
+    }
+
+    handleError = (error) => {
+        console.log(error.description);
+        this.props.onError(error);
+    }
+
+    handleBoardMessage = (message) => {
+        if (message.clear) {
             this.strokes = [];
         }
-        if (result.strokes.length > 0) {
+        if (message.strokes.length > 0) {
             // If id of the last stroke is null, then we got the stroke that we just send
             if (this.strokes.length > 0 && this.strokes[this.strokes.length - 1].id == null) {
                 // And we need to assign the received id
-                this.strokes[this.strokes.length - 1].id = result.strokes[0].id;
+                this.strokes[this.strokes.length - 1].id = message.strokes[0].id;
             } else {
-                result.strokes.forEach(value => {
+                message.strokes.forEach(value => {
                     this.strokes.push(value);
                 });
             }
         }
-        if (result.deleted !== -1) {
-            this.removeStrokeById(result.deleted);
+        if (message.deleted !== -1) {
+            this.removeStrokeById(message.deleted);
         }
         this.draw();
     }
@@ -148,7 +163,7 @@ class Board extends Component {
 
     render() {
         let protocol = location.protocol === 'https:' ? "wss://" : "ws://";
-        let url = protocol + location.host + "/api/board-endpoint";
+        let url = protocol + location.host + "/api/board-endpoint/" + this.props.id;
         return (
             <React.Fragment>
                 <canvas ref={this.canvasRef} id="canvas" width={window.innerWidth} height={window.innerHeight}

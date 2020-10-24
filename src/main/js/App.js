@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import MainPage from "./pages/MainPage";
-import CreateBoardPage from "./pages/CreateBoardPage";
 import BoardPage from "./pages/BoardPage";
 import {BrowserRouter, Route} from "react-router-dom";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 
@@ -13,13 +13,10 @@ class App extends Component {
             <BrowserRouter>
                 <Route
                     exact path="/"
-                    render={(props) => <MainPage {...props}/>}/>
+                    component={MainPage}/>
                 <Route
-                    path="/create-board"
-                    render={(props) => <CreateBoardPage {...props}/>}/>
-                <Route
-                    path="/board"
-                    render={(props) => <BoardPage {...props}/>}/>
+                    path="/:id"
+                    component={BoardPage}/>
             </BrowserRouter>
         )
     }

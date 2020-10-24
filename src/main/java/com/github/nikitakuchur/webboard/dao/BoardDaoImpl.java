@@ -1,70 +1,60 @@
 package com.github.nikitakuchur.webboard.dao;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import com.github.nikitakuchur.webboard.models.Stroke;
+import com.github.nikitakuchur.webboard.models.Board;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 @ApplicationScoped
-public class StrokeDaoImpl implements StrokeDao {
+public class BoardDaoImpl implements BoardDao {
 
     @Inject
     private SessionFactory sessionFactory;
 
     @Override
-    public void save(Stroke stroke) {
+    public int save(Board board) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(stroke);
+            Integer id = (Integer) session.save(board);
             transaction.commit();
+            return id;
         }
     }
 
     @Override
-    public void saveAll(Collection<Stroke> strokes) {
+    public Board findById(int id) {
         try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            strokes.forEach(session::save);
-            transaction.commit();
-        }
-    }
-
-    @Override
-    public Stroke findById(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(Stroke.class, id);
+            return session.get(Board.class, id);
         }
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Stroke> findAll() {
+    public List<Board> findAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("From Stroke").list();
+            return session.createQuery("From Board").list();
         }
     }
 
     @Override
-    public void update(Stroke stroke) {
+    public void update(Board board) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.update(stroke);
+            session.update(board);
             transaction.commit();
         }
     }
 
     @Override
-    public void delete(Stroke stroke) {
-        if (stroke == null) return;
+    public void delete(Board board) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(stroke);
+            session.delete(board);
             transaction.commit();
         }
     }

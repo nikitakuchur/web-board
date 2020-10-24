@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Modal, Form} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 
-class NewBoardModal extends Component {
+class ErrorModal extends Component {
     static defaultProps = {
-        onOkButtonClick: (name) => {
-        },
+        description: "Error",
         onCancelButtonClick: () => {
         },
     };
@@ -19,31 +18,23 @@ class NewBoardModal extends Component {
         return (
             <Modal
                 show={this.props.show}
-                size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 onHide={this.props.onCancelButtonClick}>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        New board
+                        Error
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form.Control ref={this.nameRef} className="mb-2" placeholder="Name"/>
-                    <Form.Control ref={this.descriptionRef} as="textarea" rows={2} placeholder="Description"/>
+                    {this.props.description}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {
-                        let board = {
-                            name: this.nameRef.current.value,
-                            description: this.descriptionRef.current.value,
-                        }
-                        this.props.onOkButtonClick(board)
-                    }}>Ok</Button>
+                    <Button onClick={this.props.onCancelButtonClick}>Ok</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
 
-export default NewBoardModal;
+export default ErrorModal;

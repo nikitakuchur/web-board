@@ -5,12 +5,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,6 +30,11 @@ public class Stroke {
     @OneToMany(mappedBy = "stroke", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Point> points;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    @JsonbTransient
+    private Board board;
+
     public Stroke() {
     }
 
@@ -38,6 +46,10 @@ public class Stroke {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getColor() {
@@ -68,19 +80,24 @@ public class Stroke {
         this.points.forEach(point -> point.setStroke(this));
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stroke stroke = (Stroke) o;
-        return id == stroke.id &&
-                Double.compare(stroke.size, size) == 0 &&
-                Objects.equals(color, stroke.color) &&
-                Objects.equals(points, stroke.points);
+        return id == stroke.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, color, size, points);
+        return Objects.hash(id);
     }
 }

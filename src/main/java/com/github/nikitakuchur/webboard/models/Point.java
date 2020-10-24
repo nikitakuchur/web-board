@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "points")
+@Table(name = "points")
 public class Point {
 
     @Id
@@ -38,6 +38,10 @@ public class Point {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getX() {
@@ -69,14 +73,11 @@ public class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return id == point.id &&
-                Double.compare(point.x, x) == 0 &&
-                Double.compare(point.y, y) == 0 &&
-                Objects.equals(stroke, point.stroke);
+        return id == point.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, x, y, stroke);
+        return Objects.hash(id);
     }
 }
