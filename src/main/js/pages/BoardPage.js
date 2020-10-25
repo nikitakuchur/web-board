@@ -40,13 +40,15 @@ class BoardPage extends Component {
 
     render() {
         return (
-            <BoardContext.Provider value={this.state} style={{touchAction: 'none', overscrollBehavior: 'none'}}>
-                <Board ref={this.boardRef} id={this.props.match.params.id} tool={this.state.tool}
-                       onError={this.handleError}/>
-                <ToolBar ref={this.toolBarRef} onClearButtonClick={this.handleClearButtonClick}
-                         onToolUpdate={this.handleToolChange}/>
-                <ErrorModal show={this.state.error.error} description={this.state.error.description}/>
-            </BoardContext.Provider>
+            <div style={{touchAction: 'none', overscrollBehavior: 'none'}}>
+                <BoardContext.Provider value={this.state}>
+                    <Board ref={this.boardRef} id={this.props.match.params.id} tool={this.state.tool}
+                           onError={this.handleError}/>
+                    <ToolBar ref={this.toolBarRef} onClearButtonClick={this.handleClearButtonClick}
+                             onToolUpdate={this.handleToolChange}/>
+                    <ErrorModal show={this.state.error.error} description={this.state.error.description}/>
+                </BoardContext.Provider>
+            </div>
         );
     }
 }
