@@ -26,7 +26,7 @@ class ErrorModal extends Component {
                         Error
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{overflow: 'auto', maxHeight: '300px'}}>
                     {this.props.description}
                 </Modal.Body>
                 <Modal.Footer>
