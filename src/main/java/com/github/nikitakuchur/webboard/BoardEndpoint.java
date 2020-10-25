@@ -29,7 +29,7 @@ public class BoardEndpoint {
     @OnOpen
     public void onOpen(Session session, @PathParam("id") String id) {
         this.session = session;
-        Integer boardId = Integer.getInteger(id);
+        Integer boardId = parseId(id);
         if (boardId == null || boardService.get(boardId) == null) {
             handleError("Board not found");
             return;
@@ -40,6 +40,14 @@ public class BoardEndpoint {
             session.getBasicRemote().sendObject(BoardMessage.strokesMessage(board.getStrokes()));
         } catch (IOException | EncodeException e) {
             e.printStackTrace();
+        }
+    }
+
+    private Integer parseId(String id) {
+        try {
+            return Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            return null;
         }
     }
 
