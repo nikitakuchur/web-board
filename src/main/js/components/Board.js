@@ -106,7 +106,9 @@ class Board extends Component {
                 this.strokes[this.strokes.length - 1].id = message.strokes[0].id;
             } else {
                 message.strokes.forEach(value => {
-                    this.strokes.push(value);
+                    if (value != null) {
+                        this.strokes.push(value);
+                    }
                 });
             }
         }
