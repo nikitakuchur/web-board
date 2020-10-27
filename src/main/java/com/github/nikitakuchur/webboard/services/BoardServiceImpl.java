@@ -23,9 +23,8 @@ public class BoardServiceImpl implements BoardService {
     private StrokeDao strokeDao;
 
     @Override
-    public Board save(Board board) {
-        int id = boardDao.save(board);
-        return boardDao.findById(id);
+    public void save(Board board) {
+        boardDao.save(board);
     }
 
     @Override
@@ -35,12 +34,14 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void addStroke(Board board, Stroke stroke) {
+        if (board == null || stroke == null) return;
         stroke.setBoard(board);
         strokeDao.save(stroke);
     }
 
     @Override
     public void addStrokes(Board board, List<Stroke> strokes) {
+        if (board == null || strokes == null) return;
         strokes.forEach(stroke -> addStroke(board, stroke));
     }
 
@@ -56,6 +57,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void clear(Board board) {
+        if (board == null) return;
         List<Stroke> strokes = boardDao.findById(board.getId()).getStrokes();
         strokes.forEach(stroke -> strokeDao.delete(stroke));
     }

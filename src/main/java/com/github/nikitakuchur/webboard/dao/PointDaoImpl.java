@@ -18,6 +18,7 @@ public class PointDaoImpl implements PointDao {
 
     @Override
     public void save(Point point) {
+        if (point == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(point);
@@ -42,6 +43,7 @@ public class PointDaoImpl implements PointDao {
 
     @Override
     public void update(Point point) {
+        if (point == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.update(point);
@@ -51,6 +53,7 @@ public class PointDaoImpl implements PointDao {
 
     @Override
     public void delete(Point point) {
+        if (point == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.delete(point);

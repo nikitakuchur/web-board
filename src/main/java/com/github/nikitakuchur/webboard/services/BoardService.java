@@ -11,9 +11,8 @@ public interface BoardService {
      * Save the given board.
      *
      * @param board the board
-     * @return the saved board
      */
-    Board save(Board board);
+    void save(Board board);
 
     /**
      * Delete the given board.

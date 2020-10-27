@@ -19,6 +19,7 @@ public class StrokeDaoImpl implements StrokeDao {
 
     @Override
     public void save(Stroke stroke) {
+        if (stroke == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(stroke);
@@ -28,6 +29,7 @@ public class StrokeDaoImpl implements StrokeDao {
 
     @Override
     public void saveAll(Collection<Stroke> strokes) {
+        if (strokes == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             strokes.forEach(session::save);
@@ -52,6 +54,7 @@ public class StrokeDaoImpl implements StrokeDao {
 
     @Override
     public void update(Stroke stroke) {
+        if (stroke == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.update(stroke);

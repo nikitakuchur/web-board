@@ -17,12 +17,12 @@ public class BoardDaoImpl implements BoardDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public int save(Board board) {
+    public void save(Board board) {
+        if (board == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            Integer id = (Integer) session.save(board);
+            session.save(board);
             transaction.commit();
-            return id;
         }
     }
 
@@ -43,6 +43,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public void update(Board board) {
+        if (board == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.update(board);
@@ -52,6 +53,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public void delete(Board board) {
+        if (board == null) return;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.delete(board);

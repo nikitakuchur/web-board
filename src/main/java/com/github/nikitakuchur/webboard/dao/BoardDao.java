@@ -10,9 +10,8 @@ public interface BoardDao {
      * Save the board.
      *
      * @param board the board
-     * @return id
      */
-    int save(Board board);
+    void save(Board board);
 
     /**
      * Find the board by id.
