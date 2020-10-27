@@ -110,7 +110,7 @@ class Board extends Component {
                 });
             }
         }
-        if (message.deleted !== -1) {
+        if (message.deleted !== null) {
             this.removeStrokeById(message.deleted);
         }
         this.draw();
@@ -119,7 +119,7 @@ class Board extends Component {
     sendStrokesMessage(strokes) {
         let message = JSON.stringify({
             strokes: strokes,
-            deleted: -1,
+            deleted: null,
             clear: false,
         });
         this.webSocketRef.current.sendMessage(message);
@@ -137,7 +137,7 @@ class Board extends Component {
     sendClearMessage() {
         let message = JSON.stringify({
             strokes: [],
-            deleted: -1,
+            deleted: null,
             clear: true,
         });
         this.webSocketRef.current.sendMessage(message);

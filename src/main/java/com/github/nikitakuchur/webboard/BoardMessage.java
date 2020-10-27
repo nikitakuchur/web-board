@@ -16,7 +16,7 @@ public class BoardMessage {
     private final Integer deleted;
     private final boolean clear;
 
-    private static final BoardMessage CLEAR_MESSAGE = new BoardMessage(Collections.emptyList(), -1, true);
+    private static final BoardMessage CLEAR_MESSAGE = new BoardMessage(Collections.emptyList(), null, true);
 
     @JsonbCreator
     public BoardMessage(@JsonbProperty("strokes") Collection<Stroke> strokes, @JsonbProperty("deleted") Integer deleted,
@@ -27,7 +27,7 @@ public class BoardMessage {
     }
 
     public static BoardMessage strokesMessage(Collection<Stroke> strokes) {
-        return new BoardMessage(strokes, -1, false);
+        return new BoardMessage(strokes, null, false);
     }
 
     public static BoardMessage deleteMessage(int deleted) {
