@@ -4,60 +4,59 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import com.github.nikitakuchur.webboard.models.Board;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 @ApplicationScoped
 public class BoardDaoImpl implements BoardDao {
 
     @Inject
-    private SessionFactory sessionFactory;
+    private EntityManagerFactory entityManagerFactory;
 
     @Override
     public void save(Board board) {
         if (board == null) return;
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.save(board);
-            transaction.commit();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(board);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
     public Board findById(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(Board.class, id);
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Board board = entityManager.find(Board.class, id);
+        entityManager.close();
+        return board;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Board> findAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("From Board").list();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        List<Board> boards = entityManager.createQuery("From Board").getResultList();
+        entityManager.close();
+        return boards;
     }
 
     @Override
     public void update(Board board) {
         if (board == null) return;
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.update(board);
-            transaction.commit();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(board);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public void delete(Board board) {
         if (board == null) return;
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.delete(board);
-            transaction.commit();
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.remove(board);
+        entityManager.getTransaction().commit();
     }
 }
