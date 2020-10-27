@@ -19,7 +19,7 @@ public class BoardMessage {
     private static final BoardMessage CLEAR_MESSAGE = new BoardMessage(Collections.emptyList(), -1, true);
 
     @JsonbCreator
-    public BoardMessage(@JsonbProperty("strokes") Collection<Stroke> strokes, @JsonbProperty("deleted") int deleted,
+    public BoardMessage(@JsonbProperty("strokes") Collection<Stroke> strokes, @JsonbProperty("deleted") Integer deleted,
             @JsonbProperty("clear") boolean clear) {
         this.strokes = strokes != null ? new ArrayList<>(strokes) : Collections.emptyList();
         this.deleted = deleted;
@@ -42,7 +42,7 @@ public class BoardMessage {
         return new ArrayList<>(strokes);
     }
 
-    public int getDeleted() {
+    public Integer getDeleted() {
         return deleted;
     }
 
