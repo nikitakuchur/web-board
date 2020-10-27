@@ -13,7 +13,7 @@ import com.github.nikitakuchur.webboard.models.Stroke;
 
 public class BoardMessage {
     private final List<Stroke> strokes;
-    private final int deleted;
+    private final Integer deleted;
     private final boolean clear;
 
     private static final BoardMessage CLEAR_MESSAGE = new BoardMessage(Collections.emptyList(), -1, true);
@@ -55,7 +55,7 @@ public class BoardMessage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoardMessage message = (BoardMessage) o;
-        return deleted == message.deleted &&
+        return Objects.equals(deleted, message.deleted) &&
                 clear == message.clear &&
                 Objects.equals(strokes, message.strokes);
     }
