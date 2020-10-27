@@ -56,6 +56,7 @@ public class PointDaoImpl implements PointDao {
         if (point == null) return;
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+        point = entityManager.merge(point);
         entityManager.remove(point);
         entityManager.getTransaction().commit();
     }

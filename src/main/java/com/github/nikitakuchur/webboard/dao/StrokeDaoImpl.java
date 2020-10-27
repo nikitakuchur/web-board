@@ -9,8 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import com.github.nikitakuchur.webboard.models.Stroke;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 @ApplicationScoped
 public class StrokeDaoImpl implements StrokeDao {
@@ -69,6 +67,7 @@ public class StrokeDaoImpl implements StrokeDao {
         if (stroke == null) return;
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+        stroke = entityManager.merge(stroke);
         entityManager.remove(stroke);
         entityManager.getTransaction().commit();
     }

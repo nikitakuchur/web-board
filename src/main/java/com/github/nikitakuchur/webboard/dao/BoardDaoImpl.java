@@ -56,6 +56,7 @@ public class BoardDaoImpl implements BoardDao {
         if (board == null) return;
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+        board = entityManager.merge(board);
         entityManager.remove(board);
         entityManager.getTransaction().commit();
     }
