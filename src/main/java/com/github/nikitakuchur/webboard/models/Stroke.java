@@ -28,7 +28,7 @@ public class Stroke {
     private String color = "#000000";
     private double size = 10;
 
-    @OneToMany(mappedBy = "stroke", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "stroke", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Point> points;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -94,7 +94,7 @@ public class Stroke {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stroke stroke = (Stroke) o;
-        return id == stroke.id;
+        return id.equals(stroke.id);
     }
 
     @Override
