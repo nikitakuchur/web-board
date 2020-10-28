@@ -28,7 +28,7 @@ public class Stroke {
     private String color = "#000000";
     private double size = 10;
 
-    @OneToMany(mappedBy = "stroke", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "stroke", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Point> points;
 
     @ManyToOne(fetch = FetchType.LAZY)
