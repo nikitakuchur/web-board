@@ -2,62 +2,51 @@ package com.github.nikitakuchur.webboard.dao;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
 
 import com.github.nikitakuchur.webboard.models.Board;
+
+import static com.github.nikitakuchur.webboard.utils.Transactions.executeInTransaction;
 
 @ApplicationScoped
 public class BoardDaoImpl implements BoardDao {
 
     @Inject
-    private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
+
+    @Resource
+    private UserTransaction userTransaction;
 
     @Override
     public void save(Board board) {
-        if (board == null) return;
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(board);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        executeInTransaction(userTransaction, () -> entityManager.persist(board));
     }
 
     @Override
     public Board findById(int id) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Board board = entityManager.find(Board.class, id);
-        entityManager.close();
-        return board;
+        return entityManager.find(Board.class, id);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Board> findAll() {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        List<Board> boards = entityManager.createQuery("From Board").getResultList();
-        entityManager.close();
-        return boards;
+        return entityManager.createQuery("From Board").getResultList();
     }
 
     @Override
     public void update(Board board) {
-        if (board == null) return;
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(board);
-        entityManager.getTransaction().commit();
+        executeInTransaction(userTransaction, () -> entityManager.merge(board));
     }
 
     @Override
-    public void delete(Board board) {
-        if (board == null) return;
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        board = entityManager.merge(board);
-        entityManager.remove(board);
-        entityManager.getTransaction().commit();
+    public void remove(Board board) {
+        executeInTransaction(userTransaction, () -> {
+            Board managedBoard = entityManager.merge(board);
+            entityManager.remove(managedBoard);
+        });
     }
 }

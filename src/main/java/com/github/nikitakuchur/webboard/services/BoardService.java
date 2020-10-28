@@ -15,11 +15,18 @@ public interface BoardService {
     void save(Board board);
 
     /**
-     * Delete the given board.
+     * Update the given board.
      *
      * @param board the board
      */
-    void delete(Board board);
+    void update(Board board);
+
+    /**
+     * Remove the given board.
+     *
+     * @param board the board
+     */
+    void remove(Board board);
 
     /**
      * Add the stroke to the given board.
@@ -28,14 +35,6 @@ public interface BoardService {
      * @param stroke the stroke to add
      */
     void addStroke(Board board, Stroke stroke);
-
-    /**
-     * Add the strokes to the given board.
-     *
-     * @param board   the board
-     * @param strokes the strokes to add
-     */
-    void addStrokes(Board board, List<Stroke> strokes);
 
     /**
      * Get the stroke by id.

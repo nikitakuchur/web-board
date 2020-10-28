@@ -43,6 +43,6 @@ public class BoardsResource {
 
     @DELETE
     public void remove(Board board) {
-        boardService.delete(board);
+        boardService.remove(board);
     }
 }

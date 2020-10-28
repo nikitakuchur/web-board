@@ -1,7 +1,6 @@
 package com.github.nikitakuchur.webboard.models;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class Board {
     private String description;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Stroke> strokes;
+    private final Set<Stroke> strokes = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -54,14 +53,11 @@ public class Board {
     }
 
     public List<Stroke> getStrokes() {
-        if (strokes == null) {
-            return Collections.emptyList();
-        }
         return new ArrayList<>(strokes);
     }
 
     public void setStrokes(List<Stroke> strokes) {
-        this.strokes = strokes != null ? new HashSet<>(strokes) : Collections.emptySet();
-        this.strokes.forEach(point -> point.setBoard(this));
+        if (strokes == null) return;
+        this.strokes.forEach(stroke -> stroke.setBoard(this));
     }
 }

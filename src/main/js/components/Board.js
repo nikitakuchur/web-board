@@ -112,7 +112,7 @@ class Board extends Component {
                 });
             }
         }
-        if (message.deleted !== null) {
+        if (message.deleted !== undefined && message.deleted !== null) {
             this.removeStrokeById(message.deleted);
         }
         this.draw();

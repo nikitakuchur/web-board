@@ -7,12 +7,11 @@ import com.github.nikitakuchur.webboard.models.Stroke;
 
 public interface StrokeDao {
     void save(Stroke stroke);
-    void saveAll(Collection<Stroke> strokes);
 
     Stroke findById(int id);
     List<Stroke> findAll();
 
     void update(Stroke stroke);
 
-    void delete(Stroke stroke);
+    void remove(Stroke stroke);
 }

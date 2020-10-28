@@ -12,5 +12,5 @@ public interface PointDao {
 
     void update(Point point);
 
-    void delete(Point point);
+    void remove(Point point);
 }

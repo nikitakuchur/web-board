@@ -36,9 +36,9 @@ public interface BoardDao {
     void update(Board board);
 
     /**
-     * Delete the given board.
+     * Remove the given board.
      *
      * @param board the board
      */
-    void delete(Board board);
+    void remove(Board board);
 }

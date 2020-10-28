@@ -28,8 +28,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void delete(Board board) {
-        boardDao.delete(board);
+    public void update(Board board) {
+        boardDao.update(board);
+    }
+
+    @Override
+    public void remove(Board board) {
+        boardDao.remove(board);
     }
 
     @Override
@@ -40,26 +45,20 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void addStrokes(Board board, List<Stroke> strokes) {
-        if (board == null || strokes == null) return;
-        strokes.forEach(stroke -> addStroke(board, stroke));
-    }
-
-    @Override
     public Stroke getStroke(int id) {
         return strokeDao.findById(id);
     }
 
     @Override
     public void deleteStroke(Stroke stroke) {
-        strokeDao.delete(stroke);
+        strokeDao.remove(stroke);
     }
 
     @Override
     public void clear(Board board) {
         if (board == null) return;
         List<Stroke> strokes = boardDao.findById(board.getId()).getStrokes();
-        strokes.forEach(stroke -> strokeDao.delete(stroke));
+        strokes.forEach(stroke -> strokeDao.remove(stroke));
     }
 
     @Override
