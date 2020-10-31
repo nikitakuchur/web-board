@@ -1,9 +1,11 @@
-package com.github.nikitakuchur.webboard;
+package com.github.nikitakuchur.webboard.endpoints;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
+
+import com.github.nikitakuchur.webboard.endpoints.BoardMessage;
 
 /**
  * The board message decoder.

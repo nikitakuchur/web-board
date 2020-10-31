@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard;
+package com.github.nikitakuchur.webboard.endpoints;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +10,8 @@ import java.util.Map;
 import javax.ejb.Singleton;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
+
+import com.github.nikitakuchur.webboard.endpoints.BoardMessage;
 
 /**
  * The broadcaster class contains connected sessions and broadcasts messages.

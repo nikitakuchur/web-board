@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard;
+package com.github.nikitakuchur.webboard.endpoints;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;

@@ -6,6 +6,7 @@ import java.util.Collections;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 
+import com.github.nikitakuchur.webboard.endpoints.BoardMessage;
 import com.github.nikitakuchur.webboard.models.Point;
 import com.github.nikitakuchur.webboard.models.Stroke;
 import org.junit.jupiter.api.DisplayName;

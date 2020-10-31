@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard;
+package com.github.nikitakuchur.webboard.dao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;

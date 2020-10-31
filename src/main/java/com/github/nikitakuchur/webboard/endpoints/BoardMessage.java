@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard;
+package com.github.nikitakuchur.webboard.endpoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
