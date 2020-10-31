@@ -11,6 +11,9 @@ import javax.json.bind.annotation.JsonbProperty;
 
 import com.github.nikitakuchur.webboard.models.Stroke;
 
+/**
+ * The board message class.
+ */
 public class BoardMessage {
     private final List<Stroke> strokes;
     private final Integer deleted;
@@ -26,26 +29,56 @@ public class BoardMessage {
         this.clear = clear;
     }
 
+    /**
+     * Creates a new strokes message.
+     *
+     * @param strokes the strokes
+     * @return the stroke message
+     */
     public static BoardMessage strokesMessage(Collection<Stroke> strokes) {
         return new BoardMessage(strokes, null, false);
     }
 
+    /**
+     * Creates a new delete message.
+     *
+     * @param deleted the id of the deleted stroke
+     * @return the delete message
+     */
     public static BoardMessage deleteMessage(int deleted) {
         return new BoardMessage(null, deleted, false);
     }
 
+    /**
+     * Creates a new clear message.
+     *
+     * @return the clear message
+     */
     public static BoardMessage clearMessage() {
         return CLEAR_MESSAGE;
     }
 
+    /**
+     * Returns the strokes.
+     *
+     * @return the strokes
+     */
     public List<Stroke> getStrokes() {
         return new ArrayList<>(strokes);
     }
 
+    /**
+     * Returns the id of the deleted stroke.
+     *
+     * @return the id
+     */
     public Integer getDeleted() {
         return deleted;
     }
 
+    /**
+     * Returns true if the board needs to be cleared and false otherwise.
+     */
     public boolean isClear() {
         return clear;
     }

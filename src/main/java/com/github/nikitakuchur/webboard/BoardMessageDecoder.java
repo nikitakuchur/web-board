@@ -5,6 +5,9 @@ import javax.json.bind.JsonbBuilder;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
+/**
+ * The board message decoder.
+ */
 public class BoardMessageDecoder implements Decoder.Text<BoardMessage> {
 
     private static final Jsonb jsonb = JsonbBuilder.create();

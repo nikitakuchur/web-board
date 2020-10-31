@@ -8,28 +8,28 @@ import com.github.nikitakuchur.webboard.models.Stroke;
 public interface BoardService {
 
     /**
-     * Save the given board.
+     * Saves the given board.
      *
      * @param board the board
      */
     void save(Board board);
 
     /**
-     * Update the given board.
+     * Updates the given board.
      *
      * @param board the board
      */
     void update(Board board);
 
     /**
-     * Remove the given board.
+     * Removes the given board.
      *
      * @param board the board
      */
     void remove(Board board);
 
     /**
-     * Add the stroke to the given board.
+     * Adds the stroke to the given board.
      *
      * @param board  the board
      * @param stroke the stroke to add
@@ -37,39 +37,39 @@ public interface BoardService {
     void addStroke(Board board, Stroke stroke);
 
     /**
-     * Get the stroke by id.
+     * Finds the stroke by the id.
      *
-     * @param id id
+     * @param id the id
      * @return the found stroke
      */
     Stroke getStroke(int id);
 
     /**
-     * Delete the stroke.
+     * Deletes the given stroke.
      *
      * @param stroke the stroke
      */
     void deleteStroke(Stroke stroke);
 
     /**
-     * Clear the given board.
+     * Clears the given board.
      *
      * @param board the board
      */
     void clear(Board board);
 
     /**
-     * Get the board by id.
+     * Finds the board by the id.
      *
-     * @param id id
+     * @param id the id
      * @return the found board
      */
     Board get(int id);
 
     /**
-     * Get all boards.
+     * Finds all the boards.
      *
-     * @return boards
+     * @return the boards
      */
     List<Board> getAll();
 }

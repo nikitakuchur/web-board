@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * The stroke model class.
+ */
 @Entity
 @Table(name = "strokes")
 public class Stroke {
@@ -36,39 +39,84 @@ public class Stroke {
     @JsonbTransient
     private Board board;
 
+    /**
+     * Default constructor.
+     */
     public Stroke() {
     }
 
+    /**
+     * The stroke constructor.
+     *
+     * @param color  the color
+     * @param size   the size
+     * @param points the points
+     */
     public Stroke(String color, double size, List<Point> points) {
         this.color = color;
         this.size = size;
         setPoints(points);
     }
 
+    /**
+     * Returns the stroke id.
+     *
+     * @return the stroke id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Sets the stroke id.
+     *
+     * @param id the stroke id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Returns the stroke color.
+     *
+     * @return the stroke color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Sets the stroke color.
+     *
+     * @param color the stroke color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * Returns the stroke size.
+     *
+     * @return the stroke size
+     */
     public double getSize() {
         return size;
     }
 
+    /**
+     * Sets the stroke size.
+     *
+     * @param size the stroke size
+     */
     public void setSize(double size) {
         this.size = size;
     }
 
+    /**
+     * Returns the stroke points.
+     *
+     * @return the stroke points
+     */
     public List<Point> getPoints() {
         if (points == null) {
             return Collections.emptyList();
@@ -76,15 +124,30 @@ public class Stroke {
         return new ArrayList<>(points);
     }
 
+    /**
+     * Sets the stroke points.
+     *
+     * @param points the stroke points
+     */
     public void setPoints(List<Point> points) {
         this.points = points != null ? new ArrayList<>(points) : Collections.emptyList();
         this.points.forEach(point -> point.setStroke(this));
     }
 
+    /**
+     * Returns the stroke board.
+     *
+     * @return the board
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Sets the stroke board.
+     *
+     * @param board the board
+     */
     public void setBoard(Board board) {
         this.board = board;
     }

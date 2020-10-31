@@ -17,11 +17,16 @@ import com.github.nikitakuchur.webboard.models.Board;
 import com.github.nikitakuchur.webboard.models.Stroke;
 import com.github.nikitakuchur.webboard.services.BoardService;
 
+/**
+ * The board endpoint class.
+ */
 @Stateful
 @ServerEndpoint(value = "/api/board-endpoint/{id}", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 public class BoardEndpoint {
+
     @Inject
     private BoardService boardService;
+
     @EJB
     private Broadcaster broadcaster;
 

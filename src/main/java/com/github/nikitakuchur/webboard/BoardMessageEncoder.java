@@ -5,7 +5,10 @@ import javax.json.bind.JsonbBuilder;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
-public class BoardMessageEncoder implements Encoder.Text<BoardMessage>  {
+/**
+ * The board message encoder.
+ */
+public class BoardMessageEncoder implements Encoder.Text<BoardMessage> {
 
     private static final Jsonb jsonb = JsonbBuilder.create();
 

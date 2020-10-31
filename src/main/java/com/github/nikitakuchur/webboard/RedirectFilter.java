@@ -11,6 +11,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The redirect filter class.
+ */
 public class RedirectFilter implements Filter {
 
     private static final String STATIC_PATH = "/static/";
