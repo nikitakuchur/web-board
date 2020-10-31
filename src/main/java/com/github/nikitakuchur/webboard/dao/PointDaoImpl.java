@@ -1,6 +1,8 @@
 package com.github.nikitakuchur.webboard.dao;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -24,9 +26,15 @@ public class PointDaoImpl implements PointDao {
     @Resource
     private UserTransaction userTransaction;
 
+    @Inject
+    private Logger logger;
+
     @Override
     public void save(Point point) {
-        executeInTransaction(userTransaction, () -> entityManager.persist(point));
+        executeInTransaction(userTransaction, () -> {
+            entityManager.persist(point);
+            logger.log(Level.INFO, "Added a new point {0}.", new Object[]{point});
+        });
     }
 
     @Override
@@ -42,7 +50,10 @@ public class PointDaoImpl implements PointDao {
 
     @Override
     public void update(Point point) {
-        executeInTransaction(userTransaction, () -> entityManager.merge(point));
+        executeInTransaction(userTransaction, () -> {
+            entityManager.merge(point);
+            logger.log(Level.INFO, "Updated the point {0}.", new Object[]{point});
+        });
     }
 
     @Override
@@ -50,6 +61,7 @@ public class PointDaoImpl implements PointDao {
         executeInTransaction(userTransaction, () -> {
             Point managedPoint = entityManager.merge(point);
             entityManager.remove(managedPoint);
+            logger.log(Level.INFO, "Removed the point {0}.", new Object[]{point});
         });
     }
 }

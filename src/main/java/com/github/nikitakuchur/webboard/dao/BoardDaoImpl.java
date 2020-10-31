@@ -1,6 +1,8 @@
 package com.github.nikitakuchur.webboard.dao;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -24,9 +26,15 @@ public class BoardDaoImpl implements BoardDao {
     @Resource
     private UserTransaction userTransaction;
 
+    @Inject
+    private Logger logger;
+
     @Override
     public void save(Board board) {
-        executeInTransaction(userTransaction, () -> entityManager.persist(board));
+        executeInTransaction(userTransaction, () -> {
+            entityManager.persist(board);
+            logger.log(Level.INFO, "Added a new board {0}.", new Object[]{board});
+        });
     }
 
     @Override
@@ -42,7 +50,10 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public void update(Board board) {
-        executeInTransaction(userTransaction, () -> entityManager.merge(board));
+        executeInTransaction(userTransaction, () -> {
+            entityManager.merge(board);
+            logger.log(Level.INFO, "Updated the board {0}.", new Object[]{board});
+        });
     }
 
     @Override
@@ -50,6 +61,7 @@ public class BoardDaoImpl implements BoardDao {
         executeInTransaction(userTransaction, () -> {
             Board managedBoard = entityManager.merge(board);
             entityManager.remove(managedBoard);
+            logger.log(Level.INFO, "Removed the board {0}.", new Object[]{board});
         });
     }
 }

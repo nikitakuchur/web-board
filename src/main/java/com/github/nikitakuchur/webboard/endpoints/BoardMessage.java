@@ -97,4 +97,13 @@ public class BoardMessage {
     public int hashCode() {
         return Objects.hash(strokes, deleted, clear);
     }
+
+    @Override
+    public String toString() {
+        return "BoardMessage{" +
+                "strokes=" + strokes +
+                ", deleted=" + deleted +
+                ", clear=" + clear +
+                '}';
+    }
 }

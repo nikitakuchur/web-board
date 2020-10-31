@@ -1,6 +1,8 @@
 package com.github.nikitakuchur.webboard.dao;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -24,9 +26,15 @@ public class StrokeDaoImpl implements StrokeDao {
     @Resource
     private UserTransaction userTransaction;
 
+    @Inject
+    private Logger logger;
+
     @Override
     public void save(Stroke stroke) {
-        executeInTransaction(userTransaction, () -> entityManager.persist(stroke));
+        executeInTransaction(userTransaction, () -> {
+            entityManager.persist(stroke);
+            logger.log(Level.INFO, "Added a new stroke {0}.", new Object[]{stroke});
+        });
     }
 
     @Override
@@ -42,7 +50,10 @@ public class StrokeDaoImpl implements StrokeDao {
 
     @Override
     public void update(Stroke stroke) {
-        executeInTransaction(userTransaction, () -> entityManager.merge(stroke));
+        executeInTransaction(userTransaction, () -> {
+            entityManager.merge(stroke);
+            logger.log(Level.INFO, "Updated the stroke {0}.", new Object[]{stroke});
+        });
     }
 
     @Override
@@ -50,6 +61,7 @@ public class StrokeDaoImpl implements StrokeDao {
         executeInTransaction(userTransaction, () -> {
             Stroke managedStroke = entityManager.merge(stroke);
             entityManager.remove(managedStroke);
+            logger.log(Level.INFO, "Removed the stroke {0}.", new Object[]{stroke});
         });
     }
 }

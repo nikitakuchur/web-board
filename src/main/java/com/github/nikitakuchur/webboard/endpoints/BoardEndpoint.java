@@ -12,6 +12,8 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.nikitakuchur.webboard.models.Board;
 import com.github.nikitakuchur.webboard.models.Stroke;
@@ -30,8 +32,12 @@ public class BoardEndpoint {
     @EJB
     private Broadcaster broadcaster;
 
+    @Inject
+    private Logger logger;
+
     @OnOpen
     public void onOpen(Session session, @PathParam("id") String id) {
+        logger.log(Level.INFO, "Opened a new session {0} with board id {1}.", new Object[]{session.getId(), id});
         Integer boardId = validateBoardId(id);
         if (boardId == null) {
             handleError(session, "Board not found");
@@ -48,6 +54,8 @@ public class BoardEndpoint {
 
     @OnMessage
     public void onMessage(Session session, @PathParam("id") String id, BoardMessage message) {
+        logger.log(Level.INFO, "Received a new message {0} form the session {1} on the board {2}.",
+                new Object[]{message, session.getId(), id});
         Integer boardId = validateBoardId(id);
         if (boardId == null) {
             handleError(session, "Board not found");
@@ -87,6 +95,7 @@ public class BoardEndpoint {
     @OnClose
     public void onClose(Session session, @PathParam("id") int id) {
         broadcaster.remove(id, session);
+        logger.log(Level.INFO, "The session {0} has been closed.", new Object[]{session.getId()});
     }
 
     @OnError
@@ -102,8 +111,9 @@ public class BoardEndpoint {
         try {
             session.getBasicRemote().sendText(errorMessage.toString());
             session.close();
+            logger.log(Level.INFO, "The session {0} got an error \"{1}\".", new Object[]{session.getId(), description});
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "an exception was thrown", e);
         }
     }
 

@@ -6,18 +6,23 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
-
-import com.github.nikitakuchur.webboard.endpoints.BoardMessage;
 
 /**
  * The broadcaster class contains connected sessions and broadcasts messages.
  */
 @Singleton
 public class Broadcaster {
+
+    @Inject
+    private Logger logger;
+
     private final Map<Integer, List<Session>> boardSessions = new HashMap<>();
 
     /**
@@ -28,6 +33,7 @@ public class Broadcaster {
      */
     public void add(int boardId, Session session) {
         boardSessions.computeIfAbsent(boardId, key -> new ArrayList<>()).add(session);
+        logger.log(Level.INFO, "Connected a new session {0} to the board {1}.", new Object[]{session.getId(), boardId});
     }
 
     /**
@@ -44,6 +50,7 @@ public class Broadcaster {
                 boardSessions.remove(boardId);
             }
         }
+        logger.log(Level.INFO, "The session {0} has been disconnected from the board {1}.", new Object[]{session.getId(), boardId});
     }
 
     /**
@@ -61,5 +68,6 @@ public class Broadcaster {
                         e.printStackTrace();
                     }
                 });
+        logger.log(Level.INFO, "The message {0} has been broadcast on the board {1}.", new Object[]{message, boardId});
     }
 }

@@ -1,9 +1,12 @@
 package com.github.nikitakuchur.webboard.services;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import com.github.nikitakuchur.webboard.dao.BoardDao;
 import com.github.nikitakuchur.webboard.dao.StrokeDao;

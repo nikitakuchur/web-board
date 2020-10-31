@@ -103,4 +103,14 @@ public class Board {
         if (strokes == null) return;
         this.strokes.forEach(stroke -> stroke.setBoard(this));
     }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", strokes=" + strokes +
+                '}';
+    }
 }
