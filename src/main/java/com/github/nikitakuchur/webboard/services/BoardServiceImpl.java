@@ -2,9 +2,8 @@ package com.github.nikitakuchur.webboard.services;
 
 import java.util.List;
 
-import javax.ejb.Singleton;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.github.nikitakuchur.webboard.dao.BoardDao;
@@ -12,14 +11,13 @@ import com.github.nikitakuchur.webboard.dao.StrokeDao;
 import com.github.nikitakuchur.webboard.models.Board;
 import com.github.nikitakuchur.webboard.models.Stroke;
 
-@Singleton
-@TransactionManagement(TransactionManagementType.BEAN)
+@ApplicationScoped
 public class BoardServiceImpl implements BoardService {
 
-    @Inject
+    @EJB
     private BoardDao boardDao;
 
-    @Inject
+    @EJB
     private StrokeDao strokeDao;
 
     @Override

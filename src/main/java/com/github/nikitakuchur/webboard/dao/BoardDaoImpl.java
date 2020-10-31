@@ -3,7 +3,9 @@ package com.github.nikitakuchur.webboard.dao;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
@@ -12,7 +14,8 @@ import com.github.nikitakuchur.webboard.models.Board;
 
 import static com.github.nikitakuchur.webboard.utils.Transactions.executeInTransaction;
 
-@ApplicationScoped
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
 public class BoardDaoImpl implements BoardDao {
 
     @Inject

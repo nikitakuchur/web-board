@@ -2,6 +2,7 @@ package com.github.nikitakuchur.webboard;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.websocket.*;
@@ -19,7 +20,7 @@ import com.github.nikitakuchur.webboard.services.BoardService;
 @Stateful
 @ServerEndpoint(value = "/api/board-endpoint/{id}", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 public class BoardEndpoint {
-    @EJB
+    @Inject
     private BoardService boardService;
     @EJB
     private Broadcaster broadcaster;
