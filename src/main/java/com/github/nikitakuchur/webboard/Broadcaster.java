@@ -13,27 +13,26 @@ import javax.websocket.Session;
 
 @Singleton
 public class Broadcaster {
-    private final Map<Integer, List<BoardEndpoint>> boardEndpoints = new HashMap<>();
+    private final Map<Integer, List<Session>> boardSessions = new HashMap<>();
 
-    public void add(int boardId, BoardEndpoint endpoint) {
-        boardEndpoints.computeIfAbsent(boardId, key -> new ArrayList<>()).add(endpoint);
+    public void add(int boardId, Session session) {
+        boardSessions.computeIfAbsent(boardId, key -> new ArrayList<>()).add(session);
     }
 
-    public void remove(int boardId, BoardEndpoint endpoint) {
-        List<BoardEndpoint> endpoints = boardEndpoints.get(boardId);
-        if (endpoints != null) {
-            endpoints.remove(endpoint);
-            if (endpoints.isEmpty()) {
-                boardEndpoints.remove(boardId);
+    public void remove(int boardId, Session session) {
+        List<Session> sessions = boardSessions.get(boardId);
+        if (sessions != null) {
+            sessions.remove(session);
+            if (sessions.isEmpty()) {
+                boardSessions.remove(boardId);
             }
         }
     }
 
     public void broadcast(int boardId, BoardMessage message) {
-        boardEndpoints.getOrDefault(boardId, Collections.emptyList())
-                .forEach(endpoint -> {
+        boardSessions.getOrDefault(boardId, Collections.emptyList())
+                .forEach(session -> {
                     try {
-                        Session session = endpoint.getSession();
                         session.getBasicRemote().sendObject(message);
                     } catch (IOException | EncodeException e) {
                         e.printStackTrace();

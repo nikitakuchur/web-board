@@ -24,17 +24,14 @@ public class BoardEndpoint {
     @EJB
     private Broadcaster broadcaster;
 
-    private Session session;
-
     @OnOpen
     public void onOpen(Session session, @PathParam("id") String id) {
-        this.session = session;
-        Integer boardId = parseId(id);
-        if (boardId == null || boardService.get(boardId) == null) {
-            handleError("Board not found");
+        Integer boardId = validateBoardId(id);
+        if (boardId == null) {
+            handleError(session, "Board not found");
             return;
         }
-        broadcaster.add(boardId, this);
+        broadcaster.add(boardId, session);
         try {
             Board board = boardService.get(boardId);
             session.getBasicRemote().sendObject(BoardMessage.strokesMessage(board.getStrokes()));
@@ -43,7 +40,37 @@ public class BoardEndpoint {
         }
     }
 
-    private Integer parseId(String id) {
+    @OnMessage
+    public void onMessage(Session session, @PathParam("id") String id, BoardMessage message) {
+        Integer boardId = validateBoardId(id);
+        if (boardId == null) {
+            handleError(session, "Board not found");
+            return;
+        }
+        if (message.isClear()) {
+            Board board = boardService.get(boardId);
+            boardService.clear(board);
+        }
+        if (message.getStrokes() != null && !message.getStrokes().isEmpty()) {
+            Board board = boardService.get(boardId);
+            boardService.addStroke(board, message.getStrokes().get(0));
+        }
+        if (message.getDeleted() != null) {
+            Stroke stroke = boardService.getStroke(message.getDeleted());
+            boardService.deleteStroke(stroke);
+        }
+        broadcaster.broadcast(boardId, message);
+    }
+
+    private Integer validateBoardId(String id) {
+        Integer boardId = parseInteger(id);
+        if (boardId == null || boardService.get(boardId) == null) {
+            return null;
+        }
+        return boardId;
+    }
+
+    private Integer parseInteger(String id) {
         try {
             return Integer.parseInt(id);
         } catch (NumberFormatException e) {
@@ -51,34 +78,17 @@ public class BoardEndpoint {
         }
     }
 
-    @OnMessage
-    public void onMessage(Session session, @PathParam("id") int id, BoardMessage message) {
-        if (message.isClear()) {
-            Board board = boardService.get(id);
-            boardService.clear(board);
-        }
-        if (message.getStrokes() != null && !message.getStrokes().isEmpty()) {
-            Board board = boardService.get(id);
-            boardService.addStroke(board, message.getStrokes().get(0));
-        }
-        if (message.getDeleted() != null) {
-            Stroke stroke = boardService.getStroke(message.getDeleted());
-            boardService.deleteStroke(stroke);
-        }
-        broadcaster.broadcast(id, message);
-    }
-
     @OnClose
     public void onClose(Session session, @PathParam("id") int id) {
-        broadcaster.remove(id, this);
+        broadcaster.remove(id, session);
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        handleError(getStackTrace(throwable));
+        handleError(session, getStackTrace(throwable));
     }
 
-    private void handleError(String description) {
+    private void handleError(Session session, String description) {
         JsonObject errorMessage = Json.createObjectBuilder()
                 .add("error", true)
                 .add("description", description)
@@ -95,9 +105,5 @@ public class BoardEndpoint {
         StringWriter sw = new StringWriter();
         throwable.printStackTrace(new PrintWriter(sw));
         return sw.toString();
-    }
-
-    public Session getSession() {
-        return session;
     }
 }
