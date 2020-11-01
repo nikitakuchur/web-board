@@ -11,18 +11,20 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
-        this.contextRef = React.createRef();
         this.strokes = [];
         this.webSocketRef = React.createRef();
     }
 
     componentDidMount() {
-        this.contextRef = this.canvasRef.current.getContext('2d');
         window.addEventListener("resize", () => {
             this.canvasRef.current.width = window.innerWidth;
             this.canvasRef.current.height = window.innerHeight;
             this.draw();
         });
+    }
+
+    componentDidUpdate() {
+        this.draw();
     }
 
     addStroke(stroke) {
@@ -144,20 +146,21 @@ class Board extends Component {
     }
 
     draw() {
-        this.contextRef.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
-        this.contextRef.lineCap = 'round';
-        this.contextRef.lineJoin = 'round';
+        const context = this.canvasRef.current.getContext('2d');
+        context.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
 
         for (let stroke of this.strokes) {
-            this.contextRef.strokeStyle = stroke.color;
-            this.contextRef.lineWidth = stroke.size;
-            this.contextRef.beginPath();
-            this.contextRef.moveTo(stroke.points[0].x, stroke.points[0].y);
+            context.strokeStyle = stroke.color;
+            context.lineWidth = stroke.size;
+            context.beginPath();
+            context.moveTo(stroke.points[0].x, stroke.points[0].y);
 
             for (let point of stroke.points) {
-                this.contextRef.lineTo(point.x, point.y)
+                context.lineTo(point.x, point.y)
             }
-            this.contextRef.stroke();
+            context.stroke();
         }
     }
 
