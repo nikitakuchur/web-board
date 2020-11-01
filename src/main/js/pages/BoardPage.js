@@ -46,7 +46,8 @@ class BoardPage extends Component {
                            onError={this.handleError}/>
                     <ToolBar ref={this.toolBarRef} onClearButtonClick={this.handleClearButtonClick}
                              onToolUpdate={this.handleToolChange}/>
-                    <ErrorModal show={this.state.error.error} description={this.state.error.description}/>
+                    <ErrorModal show={this.state.error.error} description={this.state.error.description}
+                                onCancelButtonClick={() => document.location.href = "/"}/>
                 </BoardContext.Provider>
             </div>
         );
