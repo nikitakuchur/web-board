@@ -1,12 +1,9 @@
 package com.github.nikitakuchur.webboard.services;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import com.github.nikitakuchur.webboard.dao.BoardDao;
 import com.github.nikitakuchur.webboard.dao.StrokeDao;
@@ -50,8 +47,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void deleteStroke(Stroke stroke) {
-        strokeDao.remove(stroke);
+    public void removeStroke(Board board, Stroke stroke) {
+        if (board == null || stroke == null) return;
+        board.removeStroke(stroke);
+        boardDao.update(board);
     }
 
     @Override

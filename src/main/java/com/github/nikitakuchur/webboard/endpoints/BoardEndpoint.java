@@ -70,8 +70,9 @@ public class BoardEndpoint {
             boardService.addStroke(board, message.getStrokes().get(0));
         }
         if (message.getDeleted() != null) {
+            Board board = boardService.get(boardId);
             Stroke stroke = boardService.getStroke(message.getDeleted());
-            boardService.deleteStroke(stroke);
+            boardService.removeStroke(board, stroke);
         }
         broadcaster.broadcast(boardId, message);
     }

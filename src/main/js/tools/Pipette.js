@@ -1,7 +1,9 @@
+import pipetteIcon from '../../img/pipette.png';
+
 export class Pipette {
 
     constructor() {
-        this.color = "black";
+        this.icon = pipetteIcon;
     }
 
     down(board, x, y) {

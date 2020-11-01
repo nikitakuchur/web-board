@@ -1,6 +1,10 @@
+import eraserIcon from '../../img/eraser.png';
+
 export class Eraser {
 
     constructor() {
+        this.icon = eraserIcon;
+
         this.size = 10;
         this.pressed = false;
     }

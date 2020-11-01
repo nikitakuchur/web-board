@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {Brush} from "../tools/Brush";
 import Websocket from "react-websocket";
 import {BoardContext} from "../contexts/BoardContext";
 
 class Board extends Component {
     static defaultProps = {
-        onError: (error) => {
+        onError: () => {
         },
-        tool: new Brush(),
     }
 
     constructor(props) {
@@ -57,27 +55,27 @@ class Board extends Component {
     }
 
     handleMouseDown = e => {
-        this.props.tool.down(this, e.pageX, e.pageY);
+        this.context.tool.down(this, e.pageX, e.pageY);
     }
 
     handleTouchStart = e => {
-        this.props.tool.down(this, e.touches[0].pageX, e.touches[0].pageY);
+        this.context.tool.down(this, e.touches[0].pageX, e.touches[0].pageY);
     }
 
     handleMouseUp = e => {
-        this.props.tool.up(this, e.pageX, e.pageY);
+        this.context.tool.up(this, e.pageX, e.pageY);
     }
 
     handleTouchEnd = e => {
-        this.props.tool.up(this, e.pageX, e.pageY);
+        this.context.tool.up(this, e.pageX, e.pageY);
     }
 
     handleMouseMove = e => {
-        this.props.tool.move(this, e.pageX, e.pageY);
+        this.context.tool.move(this, e.pageX, e.pageY);
     }
 
     handleTouchMove = e => {
-        this.props.tool.move(this, e.touches[0].pageX, e.touches[0].pageY);
+        this.context.tool.move(this, e.touches[0].pageX, e.touches[0].pageY);
     }
 
     handleMessage = (data) => {

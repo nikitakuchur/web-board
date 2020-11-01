@@ -2,24 +2,31 @@ import React, {Component} from 'react';
 import '../../css/board.css';
 import ToolBar from "../components/ToolBar";
 import Board from "../components/Board";
-import {Brush} from "../tools/Brush";
 import {BoardContext} from "../contexts/BoardContext";
 import ErrorModal from "../modals/ErrorModal";
+import {Brush} from "../tools/Brush";
+import {Pipette} from "../tools/Pipette";
+import {Eraser} from "../tools/Eraser";
 
 class BoardPage extends Component {
     constructor(props) {
         super(props);
+        this.boardRef = React.createRef();
+        this.toolBarRef = React.createRef();
+        this.tools = {
+            brush: new Brush(),
+            pipette: new Pipette(),
+            eraser: new Eraser(),
+        };
         this.state = {
             error: {
                 error: false,
                 description: "",
             },
-            tool: new Brush(),
+            tool: this.tools.brush,
             color: "#000000",
             setColor: this.setColor,
         }
-        this.boardRef = React.createRef();
-        this.toolBarRef = React.createRef();
     }
 
     handleError = (error) => {
@@ -34,18 +41,18 @@ class BoardPage extends Component {
         this.boardRef.current.clear();
     }
 
-    handleToolChange = (tool) => {
-        this.setState({tool: tool});
-    }
-
     render() {
         return (
             <div style={{touchAction: 'none', overscrollBehavior: 'none'}}>
                 <BoardContext.Provider value={this.state}>
-                    <Board ref={this.boardRef} id={this.props.match.params.id} tool={this.state.tool}
-                           onError={this.handleError}/>
-                    <ToolBar ref={this.toolBarRef} onClearButtonClick={this.handleClearButtonClick}
-                             onToolUpdate={this.handleToolChange}/>
+                    <Board ref={this.boardRef} id={this.props.match.params.id} onError={this.handleError}/>
+                    <ToolBar ref={this.toolBarRef}
+                             tools={this.tools}
+                             onClearButtonClick={this.handleClearButtonClick}
+                             color={this.state.color}
+                             onToolUpdate={(tool) => this.setState({tool: tool})}
+                             onColorUpdate={this.state.setColor}
+                    />
                     <ErrorModal show={this.state.error.error} description={this.state.error.description}
                                 onCancelButtonClick={() => document.location.href = "/"}/>
                 </BoardContext.Provider>

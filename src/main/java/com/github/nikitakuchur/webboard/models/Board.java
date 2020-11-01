@@ -104,6 +104,16 @@ public class Board {
         this.strokes.forEach(stroke -> stroke.setBoard(this));
     }
 
+    /**
+     * Removes the given stroke from board strokes.
+     *
+     * @param stroke the stroke
+     */
+    public void removeStroke(Stroke stroke) {
+        if (stroke == null) return;
+        this.strokes.remove(stroke);
+    }
+
     @Override
     public String toString() {
         return "Board{" +

@@ -45,11 +45,12 @@ public interface BoardService {
     Stroke getStroke(int id);
 
     /**
-     * Deletes the given stroke.
+     * Removes the given stroke from the board.
      *
+     * @param board the board
      * @param stroke the stroke
      */
-    void deleteStroke(Stroke stroke);
+    void removeStroke(Board board, Stroke stroke);
 
     /**
      * Clears the given board.

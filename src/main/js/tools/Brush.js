@@ -1,6 +1,10 @@
+import brushIcon from '../../img/brush.png';
+
 export class Brush {
 
     constructor() {
+        this.icon = brushIcon;
+
         this.size = 10;
         this.pressed = false;
         this.currentStroke = null;

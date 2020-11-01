@@ -72,30 +72,28 @@ class MainPage extends Component {
 
     card(board) {
         return (
-            <React.Fragment key={board.id}>
-                <Card style={{width: '18rem', minHeight: '10rem', margin: '10px'}}>
-                    <Card.Body style={{
-                        padding: '14px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        flexDirection: 'column'
-                    }}>
-                        <div>
-                            <Card.Title style={{display: 'flex', justifyContent: 'space-between'}}>
-                                <h5 className="m-auto">{board.name}</h5>
-                                <Button variant="light"
-                                        onClick={() => {
-                                            this.removeBoard(board);
-                                        }}>×</Button>
-                            </Card.Title>
-                            <Card.Text>{board.description}</Card.Text>
-                        </div>
-                        <Link to={{pathname: '/' + board.id}} style={{justifyContent: 'flex-end', display: 'flex'}}>
-                            <Button variant="primary">Go to board</Button>
-                        </Link>
-                    </Card.Body>
-                </Card>
-            </React.Fragment>
+            <Card key={board.id} style={{width: '18rem', minHeight: '10rem', margin: '10px'}}>
+                <Card.Body style={{
+                    padding: '14px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexDirection: 'column'
+                }}>
+                    <div>
+                        <Card.Title style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <h5 className="m-auto">{board.name}</h5>
+                            <Button variant="light"
+                                    onClick={() => {
+                                        this.removeBoard(board);
+                                    }}>×</Button>
+                        </Card.Title>
+                        <Card.Text>{board.description}</Card.Text>
+                    </div>
+                    <Link to={{pathname: '/' + board.id}} style={{justifyContent: 'flex-end', display: 'flex'}}>
+                        <Button variant="primary">Go to board</Button>
+                    </Link>
+                </Card.Body>
+            </Card>
         )
     }
 
