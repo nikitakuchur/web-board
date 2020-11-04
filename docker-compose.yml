@@ -1,0 +1,12 @@
+version: '3'
+services:
+  application:
+    build: .
+    user: root
+    ports:
+      - 80:8080
+    volumes:
+      - /db:/db
+    env_file:
+      - .env
+    restart: always
