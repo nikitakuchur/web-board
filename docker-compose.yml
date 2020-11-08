@@ -6,7 +6,7 @@ services:
     ports:
       - 80:8080
     volumes:
-      - /db:/db
+      - /opt/db:/opt/db
     env_file:
       - .env
     restart: always
