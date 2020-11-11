@@ -1,12 +1,25 @@
 version: '3'
 services:
-  application:
-    build: .
+  backend:
+    build: ./backend
     user: root
     ports:
-      - 80:8080
+      - 8080
     volumes:
       - /opt/db:/opt/db
     env_file:
       - .env
     restart: always
+  frontend:
+    build: ./frontend
+    ports:
+      - 8080
+    restart: always
+    links:
+      - backend
+  nginx:
+    build: ./nginx
+    ports:
+    - 80:80
+    links:
+      - frontend
