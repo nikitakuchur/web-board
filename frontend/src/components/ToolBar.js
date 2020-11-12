@@ -4,7 +4,7 @@ import ColorPicker from "./ColorPicker";
 import RangeSlider from 'react-bootstrap-range-slider';
 import {BoardContext} from "../contexts/BoardContext";
 
-import clearIcon from '../../img/clear.png';
+import clearIcon from '../img/clear.png';
 
 class ToolBar extends Component {
     static defaultProps = {

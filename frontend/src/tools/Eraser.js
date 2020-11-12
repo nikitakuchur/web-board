@@ -1,4 +1,4 @@
-import eraserIcon from '../../img/eraser.png';
+import eraserIcon from '../img/eraser.png';
 
 export class Eraser {
 

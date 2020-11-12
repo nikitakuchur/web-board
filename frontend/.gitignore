@@ -1,5 +1,2 @@
-/target/
-package-lock.json
-/node/
 /node_modules/
-/src/main/webapp/static/dist/
+package-lock.json

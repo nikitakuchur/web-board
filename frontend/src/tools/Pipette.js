@@ -1,4 +1,4 @@
-import pipetteIcon from '../../img/pipette.png';
+import pipetteIcon from '../img/pipette.png';
 
 export class Pipette {
 

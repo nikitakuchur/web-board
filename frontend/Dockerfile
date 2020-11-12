@@ -1,3 +1,10 @@
-FROM jboss/wildfly:21.0.0.Final
-ADD target/frontend.war /opt/jboss/wildfly/standalone/deployments/
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
+FROM node:15.2.0-alpine3.10
+
+WORKDIR /frontend
+COPY ./ ./
+
+RUN npm install --production --silent
+RUN npm run build --silent
+RUN npm install -g serve --silent
+
+CMD serve -s build

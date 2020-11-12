@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../css/board.css';
+import '../css/board.css';
 import ToolBar from "../components/ToolBar";
 import Board from "../components/Board";
 import {BoardContext} from "../contexts/BoardContext";

@@ -1,4 +1,4 @@
-import brushIcon from '../../img/brush.png';
+import brushIcon from '../img/brush.png';
 
 export class Brush {
 
