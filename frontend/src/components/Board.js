@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Websocket from "react-websocket";
 import {BoardContext} from "../contexts/BoardContext";
+import ReactLoading from 'react-loading';
 
 class Board extends Component {
     static defaultProps = {
@@ -10,6 +11,9 @@ class Board extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            loading: true,
+        }
         this.canvasRef = React.createRef();
         this.strokes = [];
         this.webSocketRef = React.createRef();
@@ -88,6 +92,7 @@ class Board extends Component {
             return;
         }
         this.handleBoardMessage(result);
+        this.setState({loading: false});
     }
 
     handleError = (error) => {
@@ -177,6 +182,11 @@ class Board extends Component {
                         onMouseMove={this.handleMouseMove}
                         onTouchMove={this.handleTouchMove}/>
                 <Websocket ref={this.webSocketRef} url={url} onMessage={this.handleMessage}/>
+                {this.state.loading ? <ReactLoading className={"loading"}
+                                                    type={"spin"}
+                                                    color={"#bdbdbd"}
+                                                    height={'8%'}
+                                                    width={'8%'}/> : null}
             </React.Fragment>
         );
     }
