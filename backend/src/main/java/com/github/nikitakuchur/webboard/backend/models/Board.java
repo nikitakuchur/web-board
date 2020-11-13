@@ -111,7 +111,15 @@ public class Board {
      */
     public void removeStroke(Stroke stroke) {
         if (stroke == null) return;
-        this.strokes.remove(stroke);
+        strokes.remove(stroke);
+    }
+
+    /**
+     * Clear the board.
+     */
+    public void clear() {
+        strokes.forEach(stroke -> stroke.setBoard(null));
+        strokes.clear();
     }
 
     @Override

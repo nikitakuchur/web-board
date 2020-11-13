@@ -56,8 +56,9 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void clear(Board board) {
         if (board == null) return;
-        List<Stroke> strokes = boardDao.findById(board.getId()).getStrokes();
-        strokes.forEach(stroke -> strokeDao.remove(stroke));
+        Board foundBoard = boardDao.findById(board.getId());
+        foundBoard.clear();
+        boardDao.update(foundBoard);
     }
 
     @Override
