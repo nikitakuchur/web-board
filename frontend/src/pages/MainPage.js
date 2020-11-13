@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Card, Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import NewBoardModal from "../modals/NewBoardModal";
+import ReactLoading from 'react-loading';
 
 class MainPage extends Component {
 
@@ -10,6 +11,7 @@ class MainPage extends Component {
         this.state = {
             boards: [],
             showNewBoardModal: false,
+            loading: true,
         }
     }
 
@@ -18,6 +20,7 @@ class MainPage extends Component {
     }
 
     getBoards() {
+        this.setState({loading: true});
         fetch("/api/boards", {
             method: "GET",
             headers: {
@@ -26,7 +29,7 @@ class MainPage extends Component {
         }).then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({boards: result});
+                    this.setState({boards: result, loading: false});
                 },
                 (error) => {
                     console.error("Error! " + error)
@@ -124,6 +127,11 @@ class MainPage extends Component {
                                    this.setState({showNewBoardModal: false});
                                }}
                 />
+                {this.state.loading ? <ReactLoading className={"loading"}
+                                                    type={"spin"}
+                                                    color={"#bdbdbd"}
+                                                    height={'8%'}
+                                                    width={'8%'}/> : null}
             </React.Fragment>);
     }
 }
