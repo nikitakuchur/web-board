@@ -61,11 +61,15 @@ class Board extends Component {
     }
 
     handleMouseDown = e => {
-        this.context.tool.down(this, e.pageX, e.pageY);
+        if (this.context.tool.pressed === false) {
+            this.context.tool.down(this, e.pageX, e.pageY);
+        }
     }
 
     handleTouchStart = e => {
-        this.context.tool.down(this, e.touches[0].pageX, e.touches[0].pageY);
+        if (this.context.tool.pressed === false) {
+            this.context.tool.down(this, e.touches[0].pageX, e.touches[0].pageY);
+        }
     }
 
     handleMouseUp = e => {
