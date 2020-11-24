@@ -4,7 +4,12 @@ import {SketchPicker} from 'react-color';
 
 class ColorPicker extends React.Component {
     static defaultProps = {
-        color: "#000000",
+        color: {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 255,
+        },
         onChange: () => {
         },
     };
@@ -12,8 +17,7 @@ class ColorPicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            displayColorPicker: false,
-            color: this.props.color,
+            displayColorPicker: false
         };
     }
 
@@ -26,7 +30,7 @@ class ColorPicker extends React.Component {
     };
 
     handleChange = (color) => {
-        this.props.onChange(color.hex);
+        this.props.onChange(color.rgb);
     };
 
     render() {
@@ -36,7 +40,7 @@ class ColorPicker extends React.Component {
                     width: '54px',
                     height: '28px',
                     borderRadius: '2px',
-                    background: `${this.props.color}`,
+                    background: `rgba(${ this.props.color.r }, ${ this.props.color.g }, ${ this.props.color.b }, ${ this.props.color.a })`,
                 },
                 swatch: {
                     padding: '5px',

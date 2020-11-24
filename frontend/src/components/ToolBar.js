@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Image, Button, Form, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import ColorPicker from "./ColorPicker";
 import RangeSlider from 'react-bootstrap-range-slider';
-import {BoardContext} from "../contexts/BoardContext";
 
 import clearIcon from '../img/clear.png';
 
@@ -77,7 +76,5 @@ class ToolBar extends Component {
         );
     }
 }
-
-ToolBar.contextType = BoardContext;
 
 export default ToolBar;

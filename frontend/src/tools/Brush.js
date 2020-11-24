@@ -1,3 +1,4 @@
+import tinycolor from 'tinycolor2'
 import brushIcon from '../img/brush.png';
 
 export class Brush {
@@ -15,7 +16,7 @@ export class Brush {
         this.currentStroke = {
             id: null,
             size: this.size,
-            color: board.context.color,
+            color: tinycolor(board.context.color).toString(),
             points: [],
         };
         board.addStroke(this.currentStroke);

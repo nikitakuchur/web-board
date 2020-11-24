@@ -24,7 +24,12 @@ class BoardPage extends Component {
                 description: "",
             },
             tool: this.tools.brush,
-            color: "#000000",
+            color: {
+                r: 0,
+                g: 0,
+                b: 0,
+                a: 255,
+            },
             setColor: this.setColor,
         }
     }

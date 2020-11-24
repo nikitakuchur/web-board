@@ -1,3 +1,4 @@
+import tinycolor from 'tinycolor2'
 import pipetteIcon from '../img/pipette.png';
 
 export class Pipette {
@@ -14,13 +15,18 @@ export class Pipette {
             for (let i = 0; i < stroke.points.length; i++) {
                 let point2 = stroke.points[i];
                 if (this.calcMinDistance(point1, point2, x, y) < stroke.size / 2) {
-                    board.context.setColor(stroke.color);
+                    board.context.setColor(tinycolor(stroke.color).toRgb());
                     return;
                 }
                 point1 = stroke.points[i];
             }
         }
-        board.context.setColor("white");
+        board.context.setColor({
+            r: 255,
+            g: 255,
+            b: 255,
+            a: 255,
+        });
     }
 
     calcMinDistance(point1, point2, x, y) {

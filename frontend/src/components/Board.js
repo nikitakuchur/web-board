@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Websocket from "react-websocket";
 import {BoardContext} from "../contexts/BoardContext";
 import ReactLoading from 'react-loading';
+import tinycolor from "tinycolor2";
 
 class Board extends Component {
     static defaultProps = {
@@ -61,7 +62,7 @@ class Board extends Component {
     }
 
     handleMouseDown = e => {
-        if (this.context.tool.pressed === false) {
+        if (this.context.tool.pressed !== true) {
             this.context.tool.down(this, e.pageX, e.pageY);
         }
     }
@@ -161,7 +162,7 @@ class Board extends Component {
         context.lineJoin = 'round';
 
         for (let stroke of this.strokes) {
-            context.strokeStyle = stroke.color;
+            context.strokeStyle = tinycolor(stroke.color).toString();
             context.lineWidth = stroke.size;
             context.beginPath();
             context.moveTo(stroke.points[0].x, stroke.points[0].y);
