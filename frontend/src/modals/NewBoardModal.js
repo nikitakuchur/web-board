@@ -3,7 +3,7 @@ import {Button, Modal, Form} from "react-bootstrap";
 
 class NewBoardModal extends Component {
     static defaultProps = {
-        onOkButtonClick: (name) => {
+        onOkButtonClick: (board) => {
         },
         onCancelButtonClick: () => {
         },
@@ -15,6 +15,14 @@ class NewBoardModal extends Component {
         this.descriptionRef = React.createRef();
     }
 
+    handleOkButtonClick() {
+        let board = {
+            name: this.nameRef.current.value,
+            description: this.descriptionRef.current.value,
+        }
+        this.props.onOkButtonClick(board);
+    }
+
     render() {
         return (
             <Modal
@@ -22,7 +30,12 @@ class NewBoardModal extends Component {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                onHide={this.props.onCancelButtonClick}>
+                onHide={this.props.onCancelButtonClick}
+                onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                        this.handleOkButtonClick();
+                    }
+                }}>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         New board
@@ -33,13 +46,7 @@ class NewBoardModal extends Component {
                     <Form.Control ref={this.descriptionRef} as="textarea" rows={2} placeholder="Description"/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {
-                        let board = {
-                            name: this.nameRef.current.value,
-                            description: this.descriptionRef.current.value,
-                        }
-                        this.props.onOkButtonClick(board)
-                    }}>Ok</Button>
+                    <Button onClick={this.handleOkButtonClick}>Ok</Button>
                 </Modal.Footer>
             </Modal>
         );
