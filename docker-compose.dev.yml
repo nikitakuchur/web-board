@@ -4,6 +4,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
+    user: root
     ports:
       - 8080
       - 9990:9990
