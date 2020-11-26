@@ -1,0 +1,34 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080
+      - 9990:9990
+    volumes:
+      - ./db:/opt/db
+    environment:
+      - USERNAME=system
+      - PASSWORD=system
+    restart: always
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000
+    volumes:
+    - ./frontend:/frontend
+    restart: always
+    links:
+      - backend
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+    - 80:80
+    links:
+      - frontend

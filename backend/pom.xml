@@ -13,6 +13,17 @@
 
     <build>
         <finalName>backend</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.2.1.Final</version>
+                <configuration>
+                    <username>system</username>
+                    <password>system</password>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>
