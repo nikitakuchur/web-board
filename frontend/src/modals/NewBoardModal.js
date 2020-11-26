@@ -15,7 +15,7 @@ class NewBoardModal extends Component {
         this.descriptionRef = React.createRef();
     }
 
-    handleOkButtonClick() {
+    handleOkButtonClick = () => {
         let board = {
             name: this.nameRef.current.value,
             description: this.descriptionRef.current.value,
