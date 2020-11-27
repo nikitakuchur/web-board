@@ -108,7 +108,7 @@ class MainPage extends Component {
 
         return (
             <React.Fragment>
-                <h4>Main page</h4>
+                <h4 className={"ml-2 mt-2"}>Boards</h4>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     {boards}
                     <Button variant="outline-primary" style={{width: '18rem', minHeight: '10rem', margin: '10px'}}
