@@ -1,4 +1,5 @@
 #canvas {
+    background-color: white;
     display: block;
     position: absolute;
 }
