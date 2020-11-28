@@ -22,9 +22,11 @@ class Board extends Component {
 
     componentDidMount() {
         window.addEventListener("resize", () => {
-            this.canvasRef.current.width = window.innerWidth;
-            this.canvasRef.current.height = window.innerHeight;
-            this.draw();
+            if (this.canvasRef.current != null) {
+                this.canvasRef.current.width = window.innerWidth;
+                this.canvasRef.current.height = window.innerHeight;
+                this.draw();
+            }
         });
     }
 

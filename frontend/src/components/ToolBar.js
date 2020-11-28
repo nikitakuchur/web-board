@@ -1,20 +1,15 @@
 import React, {Component} from 'react';
-import {Image, Button, Form, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
+import {Image, Form, ButtonGroup, ToggleButton, OverlayTrigger, Tooltip} from "react-bootstrap";
 import ColorPicker from "./ColorPicker";
 import RangeSlider from 'react-bootstrap-range-slider';
 
-import clearIcon from '../img/clear.png';
-
 class ToolBar extends Component {
     static defaultProps = {
-        onClearButtonClick: () => {
-        },
         onToolUpdate: () => {
         },
         onColorUpdate: () => {
         },
     };
-
 
     constructor(props) {
         super(props);
@@ -23,7 +18,8 @@ class ToolBar extends Component {
         };
     }
 
-    handleToolChange = (value) => {
+    handleToolChange = (event) => {
+        let value = event.target.value;
         let tool = this.props.tools[value];
         this.setState({tool: tool});
         this.props.onToolUpdate(tool);
@@ -40,10 +36,23 @@ class ToolBar extends Component {
 
     toolButton(name, tool) {
         return (
-            <ToggleButton variant="light" key={name} value={name}>
-                <Image width="24px" src={tool.icon}/>
-            </ToggleButton>
+            <OverlayTrigger
+                key={name}
+                placement="bottom"
+                overlay={<Tooltip id="button-tooltip">{this.capitalizeFirstLetter(name)}</Tooltip>}>
+                <ToggleButton variant="light"
+                              type="checkbox"
+                              value={name}
+                              checked={this.state.tool === this.props.tools[name]}
+                              onChange={this.handleToolChange}>
+                    <Image width="24px" src={tool.icon}/>
+                </ToggleButton>
+            </OverlayTrigger>
         );
+    }
+
+    capitalizeFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
     render() {
@@ -52,24 +61,18 @@ class ToolBar extends Component {
             toolButtons.push(this.toolButton(key, value));
         }
         return (
-            <Form inline id="tool-bar">
-                <Form.Group className="ml-1 mr-1">
-                    <Button variant="light" id="clear-button"
-                            onClick={this.props.onClearButtonClick}>
-                        <Image width="24px" src={clearIcon}/>
-                    </Button>
-                </Form.Group>
-                <Form.Group className="mr-1">
-                    <ToggleButtonGroup type="radio" name="options" defaultValue="brush"
-                                       onChange={this.handleToolChange}>
+            <Form inline>
+                <Form.Group className={"mr-1"}>
+                    <ButtonGroup toggle value="brush">
                         {toolButtons}
-                    </ToggleButtonGroup>
+                    </ButtonGroup>
                 </Form.Group>
-                <Form.Group className="mr-1">
+                <Form.Group className={"mr-1"}>
                     <ColorPicker color={this.props.color} onChange={this.props.onColorUpdate}/>
                 </Form.Group>
                 {this.state.tool.size !== undefined ?
                     (<RangeSlider min={1} max={50}
+                                  tooltipLabel={(value) => "Size: " + value}
                                   value={this.state.tool.size}
                                   onChange={this.handleBrushSizeChange}/>) : null}
             </Form>
