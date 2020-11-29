@@ -77,7 +77,8 @@ class BoardPage extends Component {
                     <OverlayTrigger
                         placement="top"
                         overlay={<Tooltip id="button-tooltip">Clear</Tooltip>}>
-                        <Button style={{position: 'absolute', right: 0, bottom: 0}} variant="light"
+                        <Button className={"mr-1"} style={{position: 'absolute', right: 0, bottom: 0}}
+                                variant="light"
                                 onClick={this.handleClearButtonClick}>
                             <Image width="24px" src={clearIcon}/>
                         </Button>
