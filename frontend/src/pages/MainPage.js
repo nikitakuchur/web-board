@@ -3,6 +3,7 @@ import {Card, Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import NewBoardModal from "../modals/NewBoardModal";
 import ReactLoading from 'react-loading';
+import BoardPreview from "../components/BoardPreview";
 
 class MainPage extends Component {
 
@@ -75,24 +76,23 @@ class MainPage extends Component {
 
     card(board) {
         return (
-            <Card key={board.id} style={{width: '18rem', minHeight: '10rem', margin: '10px'}}>
+            <Card key={board.id} style={{width: '350px', minHeight: '300px', margin: '10px'}}>
                 <Card.Body style={{
                     padding: '14px',
                     display: 'flex',
                     justifyContent: 'space-between',
                     flexDirection: 'column'
                 }}>
-                    <div>
-                        <Card.Title style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <h5 className="m-auto">{board.name}</h5>
-                            <Button variant="light"
-                                    onClick={() => {
-                                        this.removeBoard(board);
-                                    }}>×</Button>
-                        </Card.Title>
-                        <Card.Text>{board.description}</Card.Text>
-                    </div>
-                    <Link to={{pathname: '/' + board.id}} style={{justifyContent: 'flex-end', display: 'flex'}}>
+                    <Card.Title style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <h5 className="m-auto">{board.name}</h5>
+                        <Button variant="light"
+                                onClick={() => {
+                                    this.removeBoard(board);
+                                }}>×</Button>
+                    </Card.Title>
+                    <Card.Text>{board.description}</Card.Text>
+                    <BoardPreview strokes={board.strokes}/>
+                    <Link className={"mt-4"}  to={{pathname: '/' + board.id}} style={{justifyContent: 'flex-end', display: 'flex'}}>
                         <Button variant="primary">Go to board</Button>
                     </Link>
                 </Card.Body>
@@ -111,7 +111,7 @@ class MainPage extends Component {
                 <h4 className={"ml-2 mt-2"}>Boards</h4>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     {boards}
-                    <Button variant="outline-primary" style={{width: '18rem', minHeight: '10rem', margin: '10px'}}
+                    <Button variant="outline-primary" style={{width: '350px', minHeight: '308px', margin: '10px'}}
                             onClick={() => {
                                 this.setState({showNewBoardModal: true})
                             }}>
