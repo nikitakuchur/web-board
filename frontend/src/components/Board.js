@@ -167,7 +167,9 @@ class Board extends Component {
             context.strokeStyle = tinycolor(stroke.color).toString();
             context.lineWidth = stroke.size;
             context.beginPath();
-            context.moveTo(stroke.points[0].x, stroke.points[0].y);
+            if (stroke.points.length > 0) {
+                context.moveTo(stroke.points[0].x, stroke.points[0].y);
+            }
 
             for (let point of stroke.points) {
                 context.lineTo(point.x, point.y)

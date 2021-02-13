@@ -1,9 +1,6 @@
 package com.github.nikitakuchur.webboard.backend.models;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,7 +26,7 @@ public class Board {
     private String description;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private final Set<Stroke> strokes = new HashSet<>();
+    private Set<Stroke> strokes = new HashSet<>();
 
     /**
      * Returns the board id.
@@ -90,8 +87,8 @@ public class Board {
      *
      * @return the board strokes
      */
-    public List<Stroke> getStrokes() {
-        return new ArrayList<>(strokes);
+    public Set<Stroke> getStrokes() {
+        return Collections.unmodifiableSet(strokes);
     }
 
     /**
@@ -99,9 +96,18 @@ public class Board {
      *
      * @param strokes the board strokes
      */
-    public void setStrokes(List<Stroke> strokes) {
-        if (strokes == null) return;
-        this.strokes.forEach(stroke -> stroke.setBoard(this));
+    public void setStrokes(Set<Stroke> strokes) {
+        this.strokes = strokes;
+    }
+
+    /**
+     * Adds the given stroke to the board.
+     *
+     * @param stroke the stroke
+     */
+    public void addStroke(Stroke stroke) {
+        strokes.add(stroke);
+        stroke.setBoard(this);
     }
 
     /**
@@ -110,7 +116,6 @@ public class Board {
      * @param stroke the stroke
      */
     public void removeStroke(Stroke stroke) {
-        if (stroke == null) return;
         strokes.remove(stroke);
     }
 

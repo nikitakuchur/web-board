@@ -62,17 +62,18 @@ public class BoardEndpoint {
             return;
         }
         if (message.isClear()) {
-            Board board = boardService.get(boardId);
-            boardService.clear(board);
+            boardService.clear(boardId);
         }
         if (message.getStrokes() != null && !message.getStrokes().isEmpty()) {
             Board board = boardService.get(boardId);
-            boardService.addStroke(board, message.getStrokes().get(0));
+            board.addStroke(message.getStrokes().get(0));
+            boardService.update(board);
         }
         if (message.getDeleted() != null) {
             Board board = boardService.get(boardId);
             Stroke stroke = boardService.getStroke(message.getDeleted());
-            boardService.removeStroke(board, stroke);
+            board.removeStroke(stroke);
+            boardService.update(board);
         }
         broadcaster.broadcast(boardId, message);
     }

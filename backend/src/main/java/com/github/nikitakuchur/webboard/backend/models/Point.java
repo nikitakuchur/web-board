@@ -125,7 +125,7 @@ public class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return id.equals(point.id);
+        return Objects.equals(id, point.id);
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.github.nikitakuchur.webboard.backend.endpoints;
 
+import com.github.nikitakuchur.webboard.backend.models.Point;
+import com.github.nikitakuchur.webboard.backend.models.Stroke;
+
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.websocket.Decoder;
@@ -14,7 +17,13 @@ public class BoardMessageDecoder implements Decoder.Text<BoardMessage> {
 
     @Override
     public BoardMessage decode(String s) {
-        return jsonb.fromJson(s, BoardMessage.class);
+        BoardMessage message = jsonb.fromJson(s, BoardMessage.class);
+        for (Stroke stroke : message.getStrokes()) {
+            for (Point point : stroke.getPoints()) {
+                point.setStroke(stroke);
+            }
+        }
+        return message;
     }
 
     @Override

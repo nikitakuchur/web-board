@@ -35,28 +35,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void addStroke(Board board, Stroke stroke) {
-        if (board == null || stroke == null) return;
-        stroke.setBoard(board);
-        strokeDao.save(stroke);
-    }
-
-    @Override
     public Stroke getStroke(int id) {
         return strokeDao.findById(id);
     }
 
     @Override
-    public void removeStroke(Board board, Stroke stroke) {
-        if (board == null || stroke == null) return;
-        board.removeStroke(stroke);
-        boardDao.update(board);
-    }
-
-    @Override
-    public void clear(Board board) {
-        if (board == null) return;
-        Board foundBoard = boardDao.findById(board.getId());
+    public void clear(int id) {
+        Board foundBoard = boardDao.findById(id);
         foundBoard.clear();
         boardDao.update(foundBoard);
     }

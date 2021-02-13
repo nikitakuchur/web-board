@@ -1,9 +1,6 @@
 package com.github.nikitakuchur.webboard.backend.models;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
@@ -32,7 +29,7 @@ public class Stroke {
     private double size = 10;
 
     @OneToMany(mappedBy = "stroke", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Point> points;
+    private List<Point> points = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
@@ -118,10 +115,7 @@ public class Stroke {
      * @return the stroke points
      */
     public List<Point> getPoints() {
-        if (points == null) {
-            return Collections.emptyList();
-        }
-        return new ArrayList<>(points);
+        return Collections.unmodifiableList(points);
     }
 
     /**
@@ -130,8 +124,17 @@ public class Stroke {
      * @param points the stroke points
      */
     public void setPoints(List<Point> points) {
-        this.points = points != null ? new ArrayList<>(points) : Collections.emptyList();
-        this.points.forEach(point -> point.setStroke(this));
+        this.points = points;
+    }
+
+    /**
+     * Adds the given point to the stroke.
+     *
+     * @param point the point
+     */
+    public void addPoint(Point point) {
+        points.add(point);
+        point.setStroke(this);
     }
 
     /**

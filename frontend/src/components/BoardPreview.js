@@ -12,7 +12,7 @@ class BoardPreview extends Component {
         this.draw();
     }
 
-    // TODO: Duplicate code
+    // TODO: Remove duplicated code
     draw() {
         const context = this.canvasRef.current.getContext('2d');
         let width = this.canvasRef.current.width;
@@ -27,7 +27,9 @@ class BoardPreview extends Component {
             context.strokeStyle = tinycolor(stroke.color).toString();
             context.lineWidth = stroke.size * scale;
             context.beginPath();
-            context.moveTo(stroke.points[0].x * scale, stroke.points[0].y * scale);
+            if (stroke.points.length > 0) {
+                context.moveTo(stroke.points[0].x * scale, stroke.points[0].y * scale);
+            }
 
             for (let point of stroke.points) {
                 context.lineTo(point.x * scale, point.y * scale)

@@ -29,14 +29,6 @@ public interface BoardService {
     void remove(Board board);
 
     /**
-     * Adds the stroke to the given board.
-     *
-     * @param board  the board
-     * @param stroke the stroke to add
-     */
-    void addStroke(Board board, Stroke stroke);
-
-    /**
      * Finds the stroke by the id.
      *
      * @param id the id
@@ -45,19 +37,11 @@ public interface BoardService {
     Stroke getStroke(int id);
 
     /**
-     * Removes the given stroke from the board.
+     * Clears the board by the id.
      *
-     * @param board the board
-     * @param stroke the stroke
+     * @param id the id
      */
-    void removeStroke(Board board, Stroke stroke);
-
-    /**
-     * Clears the given board.
-     *
-     * @param board the board
-     */
-    void clear(Board board);
+    void clear(int id);
 
     /**
      * Finds the board by the id.
