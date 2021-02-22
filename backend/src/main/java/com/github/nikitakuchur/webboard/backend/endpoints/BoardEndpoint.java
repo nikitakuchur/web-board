@@ -12,6 +12,8 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,7 +69,9 @@ public class BoardEndpoint {
         if (message.getStrokes() != null && !message.getStrokes().isEmpty()) {
             Board board = boardService.get(boardId);
             board.addStroke(message.getStrokes().get(0));
-            boardService.update(board);
+            board = boardService.update(board);
+            List<Stroke> strokes = board.getStrokes();
+            message = BoardMessage.strokesMessage(Collections.singletonList(strokes.get(strokes.size() - 1)));
         }
         if (message.getDeleted() != null) {
             Board board = boardService.get(boardId);

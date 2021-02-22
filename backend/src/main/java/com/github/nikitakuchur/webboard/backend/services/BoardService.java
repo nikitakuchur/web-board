@@ -18,8 +18,9 @@ public interface BoardService {
      * Updates the given board.
      *
      * @param board the board
+     * @return the updated board
      */
-    void update(Board board);
+    Board update(Board board);
 
     /**
      * Removes the given board.

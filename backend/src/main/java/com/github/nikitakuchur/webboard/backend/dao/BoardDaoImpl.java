@@ -49,11 +49,13 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void update(Board board) {
+    public Board update(Board board) {
+        Board[] wrapper = {board};
         executeInTransaction(userTransaction, () -> {
-            entityManager.merge(board);
+            wrapper[0] = entityManager.merge(board);
             logger.log(Level.INFO, "Updated the board {0}.", new Object[]{board});
         });
+        return wrapper[0];
     }
 
     @Override

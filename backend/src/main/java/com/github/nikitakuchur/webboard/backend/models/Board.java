@@ -1,6 +1,7 @@
 package com.github.nikitakuchur.webboard.backend.models;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -87,8 +88,10 @@ public class Board {
      *
      * @return the board strokes
      */
-    public Set<Stroke> getStrokes() {
-        return Collections.unmodifiableSet(strokes);
+    public List<Stroke> getStrokes() {
+        return strokes.stream()
+                .sorted(Comparator.comparing(Stroke::getId))
+                .collect(Collectors.toList());
     }
 
     /**
