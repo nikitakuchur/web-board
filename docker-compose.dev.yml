@@ -10,7 +10,7 @@ services:
       - 9990:9990
       - 8787:8787
     volumes:
-      - ./db:/opt/db
+      - ./db-data:/opt/db
     environment:
       - USERNAME=system
       - PASSWORD=system
@@ -22,7 +22,7 @@ services:
     ports:
       - 3000
     volumes:
-    - ./frontend:/frontend
+      - ./frontend:/frontend
     restart: always
     links:
       - backend
@@ -31,6 +31,6 @@ services:
       context: ./nginx
       dockerfile: Dockerfile.dev
     ports:
-    - 80:80
+      - 8080:80
     links:
       - frontend

@@ -1,4 +1,4 @@
-FROM jboss/wildfly:21.0.0.Final
+FROM jboss/wildfly:24.0.0.Final
 
 ADD config/standalone.xml /opt/jboss/wildfly/standalone/configuration/standalone.xml
 ADD target/backend.war /opt/jboss/wildfly/standalone/deployments/

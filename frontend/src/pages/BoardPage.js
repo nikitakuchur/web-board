@@ -61,7 +61,7 @@ class BoardPage extends Component {
                                 placement="bottom"
                                 overlay={<Tooltip id="button-tooltip">Back</Tooltip>}>
                                 <Button variant="light"
-                                        onClick={() => document.location.href = "/"}>
+                                        onClick={() => document.location.href = "/boards"}>
                                     <Image width="24px" src={backIcon}/>
                                 </Button>
                             </OverlayTrigger>
@@ -84,7 +84,7 @@ class BoardPage extends Component {
                         </Button>
                     </OverlayTrigger>
                     <ErrorModal show={this.state.error.error} description={this.state.error.description}
-                                onCancelButtonClick={() => document.location.href = "/"}/>
+                                onCancelButtonClick={() => document.location.href = "/boards"}/>
                 </BoardContext.Provider>
             </div>
         );

@@ -1,7 +1,7 @@
 package com.github.nikitakuchur.webboard.backend.endpoints;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,8 +25,8 @@ import com.github.nikitakuchur.webboard.backend.services.BoardService;
 /**
  * The board endpoint class.
  */
-@Stateful
-@ServerEndpoint(value = "/board-endpoint/{id}", decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
+@ServerEndpoint(value = "/board-endpoint/{id}", configurator = BoardEndpointConfigurator.class, decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
+@Stateless
 public class BoardEndpoint {
 
     @Inject
@@ -38,7 +39,14 @@ public class BoardEndpoint {
     private Logger logger;
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("id") String id) {
+    public void onOpen(Session session, @PathParam("id") String id) throws IOException {
+        Map<String, Object> userProperties = session.getUserProperties();
+        Boolean authorized = ((Boolean) userProperties.get("authorized"));
+        if (authorized == null || !authorized) {
+            handleError(session, "No access");
+            session.close();
+            return;
+        }
         logger.log(Level.INFO, "Opened a new session {0} with board id {1}.", new Object[]{session.getId(), id});
         Integer boardId = validateBoardId(id);
         if (boardId == null) {

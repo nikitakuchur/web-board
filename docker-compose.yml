@@ -6,7 +6,7 @@ services:
     ports:
       - 8080
     volumes:
-      - /opt/db:/opt/db
+      - db-data:/opt/db
     env_file:
       - .env
     restart: always
@@ -20,6 +20,8 @@ services:
   nginx:
     build: ./nginx
     ports:
-    - 80:80
+      - 80:80
     links:
       - frontend
+volumes:
+  db-data:

@@ -3,6 +3,7 @@ package com.github.nikitakuchur.webboard.backend.resources;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -22,6 +23,7 @@ import com.github.nikitakuchur.webboard.backend.services.BoardService;
 @Path("/boards")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RolesAllowed("user")
 public class BoardsResource {
 
     @Inject

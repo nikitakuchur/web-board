@@ -5,7 +5,7 @@ import NewBoardModal from "../modals/NewBoardModal";
 import ReactLoading from 'react-loading';
 import BoardPreview from "../components/BoardPreview";
 
-class MainPage extends Component {
+class BoardsPage extends Component {
 
     constructor(props) {
         super(props);
@@ -22,56 +22,43 @@ class MainPage extends Component {
 
     getBoards() {
         this.setState({loading: true});
-        fetch("/api/boards", {
+        fetch("/api/rest/boards", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({boards: result, loading: false});
-                },
-                (error) => {
-                    console.error("Error! " + error)
+        }).then(
+            res => {
+                if (res.status === 403) {
+                    // Go to login page if something is wrong
+                    document.location.href = "/login";
+                    return;
                 }
-            )
+                res.json().then(res => this.setState({boards: res, loading: false}));
+            }
+        );
     }
 
     addBoard(board) {
-        fetch("/api/boards", {
+        fetch("/api/rest/boards", {
                 method: "POST",
                 body: JSON.stringify(board),
                 headers: {
                     "Content-Type": "application/json"
                 }
             }
-        ).then(
-            () => {
-                this.getBoards();
-            },
-            (error) => {
-                console.error("Error! " + error)
-            }
-        )
+        ).then(() => this.getBoards());
     }
 
     removeBoard(board) {
-        fetch("/api/boards", {
+        fetch("/api/rest/boards", {
                 method: "DELETE",
                 body: JSON.stringify(board),
                 headers: {
                     "Content-Type": "application/json"
                 }
             }
-        ).then(
-            () => {
-                this.getBoards();
-            },
-            (error) => {
-                console.error("Error! " + error)
-            }
-        )
+        ).then(() => this.getBoards());
     }
 
     card(board) {
@@ -92,12 +79,24 @@ class MainPage extends Component {
                     </Card.Title>
                     <Card.Text>{board.description}</Card.Text>
                     <BoardPreview strokes={board.strokes}/>
-                    <Link className={"mt-4"}  to={{pathname: '/' + board.id}} style={{justifyContent: 'flex-end', display: 'flex'}}>
+                    <Link className={"mt-4"} to={{pathname: '/boards/' + board.id}}
+                          style={{justifyContent: 'flex-end', display: 'flex'}}>
                         <Button variant="primary">Go to board</Button>
                     </Link>
                 </Card.Body>
             </Card>
         )
+    }
+
+    handleLogOutButtonClick = () => {
+        console.log("Log Out");
+        fetch("/api/rest/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        ).then(() => document.location.href = "/login");
     }
 
     render() {
@@ -108,7 +107,10 @@ class MainPage extends Component {
 
         return (
             <React.Fragment>
-                <h4 className={"ml-2 mt-2"}>My boards</h4>
+                <div className={"m-2"} style={{display: 'flex'}}>
+                    <h4>Boards</h4>
+                    <Button style={{marginLeft: 'auto'}} onClick={this.handleLogOutButtonClick}>Log Out</Button>
+                </div>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     {boards}
                     <Button variant="outline-primary" style={{width: '350px', minHeight: '308px', margin: '10px'}}
@@ -136,4 +138,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default BoardsPage;

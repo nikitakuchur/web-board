@@ -3,4 +3,4 @@
 *.iws
 .idea_modules/
 .env
-/db
+/db-data
