@@ -34,4 +34,4 @@ npm install
 docker-compose -f docker-compose.dev.yml up 
 ```
 
-After running the application go to http://localhost/.
+After running the application go to http://localhost:8080/.
