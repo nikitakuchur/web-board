@@ -5,6 +5,9 @@ import java.util.List;
 import com.github.nikitakuchur.webboard.backend.models.Board;
 import com.github.nikitakuchur.webboard.backend.models.Stroke;
 
+/**
+ * The board service.
+ */
 public interface BoardService {
 
     /**

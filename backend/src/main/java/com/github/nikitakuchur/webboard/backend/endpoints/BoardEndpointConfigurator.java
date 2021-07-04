@@ -4,6 +4,9 @@ import javax.websocket.HandshakeResponse;
 import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.ServerEndpointConfig;
 
+/**
+ * The board endpoint configurator.
+ */
 public class BoardEndpointConfigurator extends ServerEndpointConfig.Configurator {
 
     @Override

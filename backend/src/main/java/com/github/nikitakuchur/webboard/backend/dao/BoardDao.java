@@ -10,14 +10,14 @@ import com.github.nikitakuchur.webboard.backend.models.Board;
 public interface BoardDao {
 
     /**
-     * Saves the board.
+     * Saves the given board.
      *
      * @param board the board
      */
     void save(Board board);
 
     /**
-     * Finds the board by id.
+     * Finds the board by the id.
      *
      * @param id the id
      * @return the found board

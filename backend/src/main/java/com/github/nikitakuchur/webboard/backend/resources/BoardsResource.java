@@ -18,7 +18,7 @@ import com.github.nikitakuchur.webboard.backend.models.Board;
 import com.github.nikitakuchur.webboard.backend.services.BoardService;
 
 /**
- * The board resource class.
+ * Boards resource class.
  */
 @Path("/boards")
 @Produces(MediaType.APPLICATION_JSON)

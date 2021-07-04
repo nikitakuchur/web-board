@@ -1,7 +1,5 @@
 package com.github.nikitakuchur.webboard.backend.dao;
 
-import java.util.List;
-
 import com.github.nikitakuchur.webboard.backend.models.Stroke;
 
 /**
