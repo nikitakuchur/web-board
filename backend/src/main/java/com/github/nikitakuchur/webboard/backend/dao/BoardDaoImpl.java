@@ -45,7 +45,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Board> findAll() {
-        return entityManager.createQuery("From Board").getResultList();
+        return entityManager.createQuery("from Board").getResultList();
     }
 
     @Override

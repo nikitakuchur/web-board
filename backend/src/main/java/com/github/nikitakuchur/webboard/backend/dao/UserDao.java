@@ -22,4 +22,12 @@ public interface UserDao {
      * @return the list of all users
      */
     List<User> findAll();
+
+    /**
+     * Find the user by the name.
+     *
+     * @param name the name
+     * @return the found user or null
+     */
+    User findByName(String name);
 }

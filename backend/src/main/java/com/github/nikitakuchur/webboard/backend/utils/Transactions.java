@@ -12,7 +12,7 @@ public class Transactions {
     }
 
     /**
-     * Execute the given lambda in transaction.
+     * Executes the given lambda in transaction.
      *
      * @param transaction the transaction
      * @param runnable the runnable

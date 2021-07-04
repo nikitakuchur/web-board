@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByName(String name) {
-        return null;
+        return userDao.findByName(name);
     }
 
     @Override

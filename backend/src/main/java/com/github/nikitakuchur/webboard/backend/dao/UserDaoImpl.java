@@ -37,8 +37,16 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<User> findAll() {
-        return entityManager.createQuery("From User").getResultList();
+        return entityManager.createQuery("from User", User.class).getResultList();
+    }
+
+    @Override
+    public User findByName(String name) {
+        return entityManager.createQuery("select u from User u where u.name = :name", User.class)
+                .setParameter("name", name)
+                .getResultStream()
+                .findAny()
+                .orElse(null);
     }
 }
