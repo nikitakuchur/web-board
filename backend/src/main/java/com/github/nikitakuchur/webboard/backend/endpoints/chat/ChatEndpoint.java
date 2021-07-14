@@ -2,7 +2,6 @@ package com.github.nikitakuchur.webboard.backend.endpoints.chat;
 
 import com.github.nikitakuchur.webboard.backend.endpoints.GroupBroadcaster;
 import com.github.nikitakuchur.webboard.backend.endpoints.configurator.EndpointSecurityConfigurator;
-import com.github.nikitakuchur.webboard.backend.services.BoardService;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -28,9 +27,6 @@ public class ChatEndpoint {
 
     private static final String CHAT_PREFIX = "chat_";
 
-    @Inject
-    private BoardService boardService;
-
     @EJB
     private GroupBroadcaster broadcaster;
 
@@ -46,14 +42,8 @@ public class ChatEndpoint {
             session.close();
             return;
         }
-        logger.log(Level.INFO, "Opened a new session {0} with board id {1}.", new Object[]{session.getId(), id});
-        Integer boardId = validateBoardId(id);
-        if (boardId == null) {
-            handleError(session, "Board not found");
-            session.close();
-            return;
-        }
-        broadcaster.add(CHAT_PREFIX + boardId, session);
+        logger.log(Level.INFO, "Opened a new session {0} with chat id {1}.", new Object[]{session.getId(), id});
+        broadcaster.add(CHAT_PREFIX + id, session);
         try {
             session.getBasicRemote().sendObject(new ChatMessage("info", "connected"));
         } catch (IOException | EncodeException e) {
@@ -64,33 +54,12 @@ public class ChatEndpoint {
 
     @OnMessage
     public void onMessage(Session session, @PathParam("id") String id, ChatMessage message) {
-        logger.log(Level.INFO, "Received a new message form the session {0} on the board {1}.",
+        logger.log(Level.INFO, "Received a new message form the session {0} on the chat {1}.",
                 new Object[]{session.getId(), id});
-        Integer boardId = validateBoardId(id);
-        if (boardId == null) {
-            handleError(session, "Board not found");
-            return;
-        }
         String name = (String) session.getUserProperties().get("name");
         message.setUser(name);
-        broadcaster.broadcast(CHAT_PREFIX + boardId, message);
-        logger.log(Level.INFO, "The message has been broadcast on the board {0}.", new Object[]{boardId});
-    }
-
-    private Integer validateBoardId(String id) {
-        Integer boardId = parseInteger(id);
-        if (boardId == null || boardService.get(boardId) == null) {
-            return null;
-        }
-        return boardId;
-    }
-
-    private Integer parseInteger(String id) {
-        try {
-            return Integer.parseInt(id);
-        } catch (NumberFormatException e) {
-            return null;
-        }
+        broadcaster.broadcast(CHAT_PREFIX + id, message);
+        logger.log(Level.INFO, "The message has been broadcast on the chat {0}.", new Object[]{id});
     }
 
     @OnClose
@@ -104,6 +73,7 @@ public class ChatEndpoint {
         handleError(session, getStackTrace(throwable));
     }
 
+    // TODO: Code duplication
     private void handleError(Session session, String description) {
         JsonObject errorMessage = Json.createObjectBuilder()
                 .add("error", true)
