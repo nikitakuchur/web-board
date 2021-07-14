@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard.backend.endpoints;
+package com.github.nikitakuchur.webboard.backend.endpoints.board;
 
 import com.github.nikitakuchur.webboard.backend.models.Point;
 import com.github.nikitakuchur.webboard.backend.models.Stroke;

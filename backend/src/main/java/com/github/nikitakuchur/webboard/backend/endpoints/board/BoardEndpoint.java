@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.webboard.backend.endpoints;
+package com.github.nikitakuchur.webboard.backend.endpoints.board;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.github.nikitakuchur.webboard.backend.endpoints.GroupBroadcaster;
+import com.github.nikitakuchur.webboard.backend.endpoints.configurator.EndpointSecurityConfigurator;
 import com.github.nikitakuchur.webboard.backend.models.Board;
 import com.github.nikitakuchur.webboard.backend.models.Stroke;
 import com.github.nikitakuchur.webboard.backend.services.BoardService;
@@ -25,15 +27,17 @@ import com.github.nikitakuchur.webboard.backend.services.BoardService;
 /**
  * The board endpoint class.
  */
-@ServerEndpoint(value = "/board-endpoint/{id}", configurator = BoardEndpointConfigurator.class, decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
+@ServerEndpoint(value = "/board-endpoint/{id}", configurator = EndpointSecurityConfigurator.class, decoders = BoardMessageDecoder.class, encoders = BoardMessageEncoder.class)
 @Stateless
 public class BoardEndpoint {
+
+    private static final String BOARD_PREFIX = "board_";
 
     @Inject
     private BoardService boardService;
 
     @EJB
-    private Broadcaster broadcaster;
+    private GroupBroadcaster broadcaster;
 
     @Inject
     private Logger logger;
@@ -51,9 +55,10 @@ public class BoardEndpoint {
         Integer boardId = validateBoardId(id);
         if (boardId == null) {
             handleError(session, "Board not found");
+            session.close();
             return;
         }
-        broadcaster.add(boardId, session);
+        broadcaster.add(BOARD_PREFIX + boardId, session);
         try {
             Board board = boardService.get(boardId);
             session.getBasicRemote().sendObject(BoardMessage.strokesMessage(board.getStrokes()));
@@ -64,8 +69,8 @@ public class BoardEndpoint {
 
     @OnMessage
     public void onMessage(Session session, @PathParam("id") String id, BoardMessage message) {
-        logger.log(Level.INFO, "Received a new message {0} form the session {1} on the board {2}.",
-                new Object[]{message, session.getId(), id});
+        logger.log(Level.INFO, "Received a new message form the session {0} on the board {1}.",
+                new Object[]{session.getId(), id});
         Integer boardId = validateBoardId(id);
         if (boardId == null) {
             handleError(session, "Board not found");
@@ -87,7 +92,8 @@ public class BoardEndpoint {
             board.removeStroke(stroke);
             boardService.update(board);
         }
-        broadcaster.broadcast(boardId, message);
+        broadcaster.broadcast(BOARD_PREFIX + boardId, message);
+        logger.log(Level.INFO, "The message has been broadcast on the board {0}.", new Object[]{boardId});
     }
 
     private Integer validateBoardId(String id) {
@@ -107,8 +113,8 @@ public class BoardEndpoint {
     }
 
     @OnClose
-    public void onClose(Session session, @PathParam("id") int id) {
-        broadcaster.remove(id, session);
+    public void onClose(Session session, @PathParam("id") String id) {
+        broadcaster.remove(BOARD_PREFIX + id, session);
         logger.log(Level.INFO, "The session {0} has been closed.", new Object[]{session.getId()});
     }
 

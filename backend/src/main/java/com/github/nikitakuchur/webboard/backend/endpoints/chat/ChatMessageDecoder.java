@@ -1,20 +1,22 @@
-package com.github.nikitakuchur.webboard.backend.endpoints;
+package com.github.nikitakuchur.webboard.backend.endpoints.chat;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
-import javax.websocket.Encoder;
+import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
-/**
- * The board message encoder.
- */
-public class BoardMessageEncoder implements Encoder.Text<BoardMessage> {
+public class ChatMessageDecoder implements Decoder.Text<ChatMessage> {
 
     private static final Jsonb jsonb = JsonbBuilder.create();
 
     @Override
-    public String encode(BoardMessage message) {
-        return jsonb.toJson(message);
+    public ChatMessage decode(String s) {
+        return jsonb.fromJson(s, ChatMessage.class);
+    }
+
+    @Override
+    public boolean willDecode(String s) {
+        return s != null;
     }
 
     @Override

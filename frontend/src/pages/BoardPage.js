@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
 import '../css/board.css';
 import {Button, Form, Image, OverlayTrigger, Tooltip} from "react-bootstrap";
+
 import ToolBar from "../components/ToolBar";
 import Board from "../components/Board";
+import Chat from "../components/Chat";
+
 import {BoardContext} from "../contexts/BoardContext";
+
 import ErrorModal from "../modals/ErrorModal";
 import {Brush} from "../tools/Brush";
 import {Pipette} from "../tools/Pipette";
-import {Eraser} from "../tools/Eraser";
 
+import {Eraser} from "../tools/Eraser";
 import backIcon from '../img/back.png';
 import clearIcon from '../img/clear.png';
 
@@ -51,6 +55,7 @@ class BoardPage extends Component {
     }
 
     render() {
+        document.body.style.overflow = "hidden";
         return (
             <div style={{touchAction: 'none', overscrollBehavior: 'none'}}>
                 <BoardContext.Provider value={this.state}>
@@ -83,6 +88,7 @@ class BoardPage extends Component {
                             <Image width="24px" src={clearIcon}/>
                         </Button>
                     </OverlayTrigger>
+                    <Chat id={this.props.match.params.id}/>
                     <ErrorModal show={this.state.error.error} description={this.state.error.description}
                                 onCancelButtonClick={() => document.location.href = "/boards"}/>
                 </BoardContext.Provider>
