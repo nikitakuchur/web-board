@@ -1,14 +1,14 @@
-version: '3'
+version: "3.9"
 services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile-dev
     user: root
     ports:
-      - 8080
-      - 9990:9990
-      - 8787:8787
+      - "8080"
+      - "9990:9990"
+      - "8787:8787"
     volumes:
       - ./db-data:/opt/db
     environment:
@@ -18,9 +18,9 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile-dev
     ports:
-      - 3000
+      - "3000"
     volumes:
       - ./frontend:/frontend
     restart: always
@@ -29,8 +29,8 @@ services:
   nginx:
     build:
       context: ./nginx
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile-dev
     ports:
-      - 8080:80
+      - "8080:80"
     links:
       - frontend

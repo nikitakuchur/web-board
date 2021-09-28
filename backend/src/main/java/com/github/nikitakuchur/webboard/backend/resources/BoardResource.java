@@ -18,13 +18,13 @@ import com.github.nikitakuchur.webboard.backend.models.Board;
 import com.github.nikitakuchur.webboard.backend.services.BoardService;
 
 /**
- * Boards resource class.
+ * Board resource class.
  */
 @Path("/boards")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("user")
-public class BoardsResource {
+public class BoardResource {
 
     @Inject
     private BoardService boardService;

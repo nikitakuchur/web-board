@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import LogInPage from "./pages/LogInPage";
 import SignUpPage from "./pages/SignUpPage";
-import BoardsPage from "./pages/BoardsPage";
+import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
 import {BrowserRouter, Route, Redirect} from "react-router-dom";
 
@@ -21,7 +21,7 @@ class App extends Component {
                     component={SignUpPage}/>
                 <Route
                     exact path="/boards"
-                    component={BoardsPage}/>
+                    component={BoardListPage}/>
                 <Route
                     path="/boards/:id"
                     component={BoardPage}/>

@@ -5,7 +5,7 @@ import NewBoardModal from "../modals/NewBoardModal";
 import ReactLoading from 'react-loading';
 import BoardPreview from "../components/BoardPreview";
 
-class BoardsPage extends Component {
+class BoardListPage extends Component {
 
     constructor(props) {
         super(props);
@@ -138,4 +138,4 @@ class BoardsPage extends Component {
     }
 }
 
-export default BoardsPage;
+export default BoardListPage;

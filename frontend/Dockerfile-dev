@@ -1,0 +1,6 @@
+FROM docker.io/node:16.10-alpine3.11
+
+WORKDIR /frontend
+COPY ./ ./
+
+CMD npm start
