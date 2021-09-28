@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "^5.1.1",
+    "bootstrap": "^4.6.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.4",
     "react-color": "^2.19.3",
