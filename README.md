@@ -23,7 +23,7 @@ mvn
 
 3. Run application
 ```bash
-dokcer-compose up
+docker-compose up
 ```
 
 If you need the dev version, follow the instructions below.
