@@ -24,7 +24,7 @@ public interface UserDao {
     List<User> findAll();
 
     /**
-     * Find the user by the name.
+     * Finds the user by the name.
      *
      * @param name the name
      * @return the found user or null

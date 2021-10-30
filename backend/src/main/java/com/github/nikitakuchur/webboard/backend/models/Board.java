@@ -116,7 +116,7 @@ public class Board {
     }
 
     /**
-     * Clear the board.
+     * Clears the board.
      */
     public void clear() {
         strokes.forEach(stroke -> stroke.setBoard(null));
